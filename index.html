@@ -624,6 +624,243 @@
         border-color: var(--accent);
         box-shadow: 0 0 24px rgba(244, 114, 182, 0.4);
       }
+
+      /* Terminal easter egg */
+      .terminal-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0;
+        border: none;
+        background: transparent;
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.8125rem;
+        color: var(--muted);
+        opacity: 0.35;
+        cursor: pointer;
+        transition:
+          opacity 0.25s ease,
+          color 0.25s ease;
+      }
+
+      .terminal-ghost:hover {
+        opacity: 1;
+        color: var(--accent);
+      }
+
+      .terminal-ghost:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        opacity: 1;
+      }
+
+      #terminal-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: rgba(12, 10, 9, 0.55);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.25s ease,
+          visibility 0.25s ease;
+      }
+
+      #terminal-modal.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      #terminal-modal.is-open .terminal-window {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+
+      html.has-custom-cursor #terminal-modal,
+      html.has-custom-cursor #terminal-modal * {
+        cursor: auto !important;
+      }
+
+      .terminal-window {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 40rem;
+        max-height: min(32rem, 85vh);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        transform: scale(0.96) translateY(8px);
+        opacity: 0;
+        transition:
+          transform 0.3s cubic-bezier(0.34, 1.25, 0.64, 1),
+          opacity 0.25s ease;
+      }
+
+      @media (max-width: 640px) {
+        #terminal-modal {
+          padding: 0;
+          align-items: stretch;
+        }
+
+        .terminal-window {
+          max-width: none;
+          max-height: none;
+          height: 100%;
+          border-radius: 0;
+          border: none;
+        }
+      }
+
+      .terminal-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.625rem 0.875rem;
+        background: color-mix(in srgb, var(--bg) 80%, var(--surface));
+        border-bottom: 1px solid var(--border);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.6875rem;
+        color: var(--muted);
+      }
+
+      .terminal-dots {
+        display: flex;
+        gap: 0.375rem;
+      }
+
+      .terminal-dots span {
+        width: 0.625rem;
+        height: 0.625rem;
+        border-radius: 50%;
+        background: var(--border);
+      }
+
+      .terminal-dots span:nth-child(1) {
+        background: #ff5f57;
+      }
+      .terminal-dots span:nth-child(2) {
+        background: #febc2e;
+      }
+      .terminal-dots span:nth-child(3) {
+        background: #28c840;
+      }
+
+      .terminal-output {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem 1rem 0.5rem;
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.8125rem;
+        line-height: 1.55;
+        color: var(--text);
+        min-height: 14rem;
+      }
+
+      .terminal-output .line {
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin-bottom: 0.125rem;
+      }
+
+      .terminal-output .line--cmd {
+        color: var(--accent);
+      }
+
+      .terminal-output .line--muted {
+        color: var(--muted);
+      }
+
+      .terminal-output .line--success {
+        color: color-mix(in srgb, var(--accent) 70%, #22c55e);
+      }
+
+      .terminal-output .line--error {
+        color: #ef4444;
+      }
+
+      html.neon .terminal-output .line--cmd {
+        color: var(--primary);
+      }
+
+      .terminal-input-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem 0.875rem;
+        border-top: 1px solid var(--border);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.8125rem;
+      }
+
+      .terminal-prompt {
+        color: var(--accent);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      html.neon .terminal-prompt {
+        color: var(--primary);
+      }
+
+      .terminal-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: var(--text);
+        font-family: inherit;
+        font-size: inherit;
+        outline: none;
+        min-width: 0;
+      }
+
+      .terminal-matrix {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 2;
+      }
+
+      .terminal-matrix.is-active {
+        opacity: 0.85;
+      }
+
+      html.neon .terminal-window::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.02) 2px,
+          rgba(255, 255, 255, 0.02) 4px
+        );
+        z-index: 1;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #terminal-modal,
+        .terminal-window {
+          transition: none;
+        }
+
+        #terminal-modal.is-open .terminal-window {
+          transform: none;
+          opacity: 1;
+        }
+      }
     </style>
     <link
       rel="stylesheet"
@@ -632,7 +869,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
@@ -854,10 +1091,14 @@
                   ><i data-lucide="map-pin" class="w-3.5 h-3.5"></i>Available
                   remotely</span
                 ><span class="inline-flex items-center gap-2"
-                  ><i
-                    data-lucide="circle-dot"
-                    class="w-3.5 h-3.5 text-[var(--accent)]"
-                  ></i
+                  ><span
+                    id="neon-tap-egg"
+                    class="inline-flex items-center justify-center p-1.5 -m-1.5 touch-manipulation select-none"
+                    aria-hidden="true"
+                    ><i
+                      data-lucide="circle-dot"
+                      class="w-3.5 h-3.5 text-[var(--accent)]"
+                    ></i></span
                   >Open to opportunities</span
                 >
               </div>
@@ -1638,7 +1879,14 @@
                 rel="noopener noreferrer"
                 class="text-[var(--muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2"
                 ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a
+              ><button
+                id="terminal-trigger"
+                type="button"
+                class="terminal-ghost"
+                aria-label="Open terminal"
               >
+                <span aria-hidden="true">&gt;_</span>
+              </button>
             </div>
           </div>
           <div class="divider-line my-8"></div>
@@ -1653,6 +1901,38 @@
           </div>
         </div>
       </footer>
+    </div>
+    <div
+      id="terminal-modal"
+      class="terminal-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="terminal-title"
+      aria-hidden="true"
+      hidden
+    >
+      <div class="terminal-window">
+        <canvas class="terminal-matrix" id="terminal-matrix" aria-hidden="true"></canvas>
+        <div class="terminal-titlebar">
+          <div class="terminal-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <span id="terminal-title">jobin@portfolio ~ bash</span>
+        </div>
+        <div class="terminal-output" id="terminal-output" aria-live="polite"></div>
+        <form class="terminal-input-row" id="terminal-form" autocomplete="off">
+          <span class="terminal-prompt">jobin@portfolio:~$</span>
+          <input
+            type="text"
+            id="terminal-input"
+            class="terminal-input"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            aria-label="Terminal command input"
+          />
+        </form>
+      </div>
     </div>
     <script>
       lucide.createIcons();
@@ -1725,6 +2005,13 @@
         function toggleNeon() {
           setNeon(!isNeon());
         }
+
+        window.__portfolioTheme = {
+          setNeon: setNeon,
+          toggleNeon: toggleNeon,
+          isNeon: isNeon,
+          showToast: showToast,
+        };
 
         try {
           if (localStorage.getItem(STORAGE_KEY) === 'neon') {
@@ -1823,6 +2110,10 @@
           'keydown',
           function (e) {
             if (e.key === 'Escape' && isNeon()) {
+              const termModal = document.getElementById('terminal-modal');
+              if (termModal && termModal.classList.contains('is-open')) {
+                return;
+              }
               setNeon(false);
               konamiIndex = 0;
               logKonami('reset — Escape exited neon mode');
@@ -1869,6 +2160,35 @@
           },
           true,
         );
+
+        const neonTapEgg = document.getElementById('neon-tap-egg');
+        if (neonTapEgg) {
+          const TAPS_NEEDED = 7;
+          const TAP_RESET_MS = 2500;
+          let tapCount = 0;
+          let tapResetTimer = null;
+
+          neonTapEgg.addEventListener('click', function () {
+            tapCount += 1;
+            clearTimeout(tapResetTimer);
+            logKonami('tap egg', {
+              count: tapCount,
+              needed: TAPS_NEEDED,
+            });
+
+            if (tapCount >= TAPS_NEEDED) {
+              tapCount = 0;
+              logKonami('Neon tap egg activating');
+              toggleNeon();
+              return;
+            }
+
+            tapResetTimer = setTimeout(function () {
+              tapCount = 0;
+              logKonami('tap egg reset — idle');
+            }, TAP_RESET_MS);
+          });
+        }
 
         const finePointer = window.matchMedia('(pointer: fine)').matches;
         const reduceMotionCursor = window.matchMedia(
@@ -1926,6 +2246,877 @@
         }
 
         tick();
+      })();
+
+      (function () {
+        const PROFILE = {
+          name: 'Jobin Mathew',
+          title: 'Full-Stack Developer',
+          email: 'jeffz.in7@gmail.com',
+          linkedin: 'https://linkedin.com/in/jobinmathew7',
+          github: 'https://github.com/JobinMathewP',
+          resumePath: './Jobin_Mathew_Resume.pdf',
+          years: 9,
+          location: 'Available remotely',
+          bio: [
+            'With 9 years of experience as a full-stack engineer, I specialize in building robust backend systems, intuitive frontends, and scalable cloud infrastructure. My expertise spans the entire development lifecycle, from architecture and implementation to deployment and optimization.',
+            'Having thrived in fast-paced startup environments, I bring a unique blend of technical excellence and product thinking to every project. I\'m passionate about clean architecture, solving complex problems, and creating solutions that make a real impact.',
+          ],
+          availability:
+            'Open to select freelance engagements, consulting, and full-time opportunities.',
+          skills: {
+            'Core Languages': [
+              'JavaScript',
+              'TypeScript',
+              'SQL',
+              'NoSQL',
+              'Python (basic)',
+            ],
+            Backend: [
+              'Node.js',
+              'NestJS',
+              'Express',
+              'Sequelize',
+              'Mongoose',
+            ],
+            Frontend: ['React', 'Next.js', 'HTML', 'CSS', 'Tailwind'],
+            'Cloud & DevOps': [
+              'AWS (ECS, S3, CloudFront, ACM, Lambda)',
+              'Docker',
+              'GitHub Actions',
+            ],
+            Tools: [
+              'GitHub',
+              'Postman',
+              'MongoDB',
+              'Stripe',
+              'Firebase',
+              'Terraform',
+            ],
+          },
+          experience: [
+            'Built and scaled production applications end-to-end',
+            'Designed REST APIs and backend systems',
+            'Managed deployments and cloud infrastructure on AWS',
+            'Improved system performance and reliability',
+            'Collaborated closely with founders, designers, and product teams',
+          ],
+          services: [
+            {
+              title: 'Backend Development',
+              blurb:
+                'Scalable REST APIs, microservices architecture, and robust server-side logic using Node.js and NestJS.',
+            },
+            {
+              title: 'Frontend Development',
+              blurb:
+                'Modern, responsive user interfaces with React, Next.js, and component-based architectures.',
+            },
+            {
+              title: 'Cloud Architecture',
+              blurb:
+                'AWS infrastructure design, deployment automation, and cloud-native application development.',
+            },
+            {
+              title: 'Automation & API Integrations',
+              blurb:
+                'Third-party integrations, workflow automation, and seamless system connectivity.',
+            },
+          ],
+          vfs: {
+            '~': {
+              type: 'dir',
+              children: ['about.txt', 'projects', 'resume.pdf', 'contact'],
+            },
+            '~/about.txt': {
+              type: 'file',
+              content: '',
+            },
+            '~/projects': {
+              type: 'dir',
+              children: ['portfolio.md', 'stack.txt'],
+            },
+            '~/projects/portfolio.md': {
+              type: 'file',
+              content:
+                '# portfolio\n\nYou are looking at it. Built with HTML, Tailwind, and a hidden terminal.\n',
+            },
+            '~/projects/stack.txt': {
+              type: 'file',
+              content: 'Node.js | React | AWS | TypeScript\n',
+            },
+            '~/resume.pdf': { type: 'file', binary: true },
+            '~/contact': { type: 'dir', children: ['email.txt'] },
+            '~/contact/email.txt': {
+              type: 'file',
+              content: 'jeffz.in7@gmail.com\n',
+            },
+          },
+        };
+
+        PROFILE.vfs['~/about.txt'].content = PROFILE.bio.join('\n\n') + '\n';
+
+        const FORTUNES = [
+          'There are only two hard things in CS: cache invalidation and naming things.',
+          'First, solve the problem. Then, write the code.',
+          'Any fool can write code that a computer can understand.',
+          'Talk is cheap. Show me the code. — Linus Torvalds',
+          'Programs must be written for people to read.',
+          'Debugging is like being the detective in a crime movie where you are also the murderer.',
+          'It works on my machine. — every developer, eventually',
+          'A good programmer is someone who looks both ways before crossing a one-way street.',
+          'Weeks of coding can save you hours of planning.',
+          'There is no cloud. It is just someone else\'s computer.',
+          'sudo make me a sandwich.',
+          'Real artists ship.',
+        ];
+
+        const ALIASES = {
+          '?': 'help',
+          cls: 'clear',
+          me: 'whoami',
+          stack: 'skills',
+          tech: 'skills',
+          work: 'experience',
+          exp: 'experience',
+          mail: 'contact',
+          email: 'contact',
+          cv: 'resume',
+          quit: 'exit',
+          q: 'exit',
+          fastfetch: 'neofetch',
+          gh: 'github',
+          'open-to-work': 'hire',
+        };
+
+        const COMMAND_NAMES = [
+          'help',
+          'clear',
+          'whoami',
+          'about',
+          'skills',
+          'experience',
+          'services',
+          'contact',
+          'resume',
+          'exit',
+          'neofetch',
+          'ls',
+          'tree',
+          'cat',
+          'curl',
+          'hire',
+          'history',
+          'github',
+          'sudo',
+          'rm',
+          'matrix',
+          'neon',
+          'coffee',
+          'fortune',
+          'ping',
+          'npm',
+          'apt',
+          'vim',
+          'nano',
+          'hello',
+          'hi',
+        ];
+
+        const modal = document.getElementById('terminal-modal');
+        const output = document.getElementById('terminal-output');
+        const input = document.getElementById('terminal-input');
+        const form = document.getElementById('terminal-form');
+        const trigger = document.getElementById('terminal-trigger');
+        const matrixCanvas = document.getElementById('terminal-matrix');
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        let isOpen = false;
+        let welcomed = false;
+        let history = [];
+        let historyIndex = -1;
+        let focusBeforeOpen = null;
+        let matrixAnimId = null;
+        let matrixTimer = null;
+        let tabCycle = { matches: [], index: 0, prefix: '' };
+
+        function resolvePath(cwd, arg) {
+          if (!arg || arg === '~' || arg === '.') return '~';
+          if (arg.startsWith('~/')) return arg;
+          if (arg === '..') return '~';
+          return cwd === '~' ? '~/' + arg : cwd + '/' + arg;
+        }
+
+        function levenshtein(a, b) {
+          const m = a.length;
+          const n = b.length;
+          const dp = Array.from({ length: m + 1 }, function (_, i) {
+            const row = new Array(n + 1);
+            row[0] = i;
+            return row;
+          });
+          for (let j = 0; j <= n; j++) dp[0][j] = j;
+          for (let i = 1; i <= m; i++) {
+            for (let j = 1; j <= n; j++) {
+              const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+              dp[i][j] = Math.min(
+                dp[i - 1][j] + 1,
+                dp[i][j - 1] + 1,
+                dp[i - 1][j - 1] + cost,
+              );
+            }
+          }
+          return dp[m][n];
+        }
+
+        function suggestCommand(name) {
+          let best = null;
+          let bestDist = 4;
+          COMMAND_NAMES.forEach(function (cmd) {
+            const d = levenshtein(name, cmd);
+            if (d < bestDist) {
+              bestDist = d;
+              best = cmd;
+            }
+          });
+          return best;
+        }
+
+        function appendLine(text, className) {
+          const line = document.createElement('div');
+          line.className = 'line' + (className ? ' ' + className : '');
+          line.textContent = text;
+          output.appendChild(line);
+          output.scrollTop = output.scrollHeight;
+        }
+
+        function appendLines(lines, className) {
+          lines.forEach(function (line) {
+            appendLine(line, className);
+          });
+        }
+
+        function clearOutput() {
+          output.innerHTML = '';
+        }
+
+        function showWelcome() {
+          if (welcomed) return;
+          welcomed = true;
+          appendLines(
+            [
+              '  Welcome to jobin@portfolio',
+              "  Type 'help' to get started. Try 'neofetch' if you're curious.",
+              '  Tip: Ctrl+` toggles this terminal.',
+              '',
+            ],
+            'line--muted',
+          );
+        }
+
+        function openTerminal() {
+          if (isOpen) return;
+          isOpen = true;
+          focusBeforeOpen = document.activeElement;
+          modal.hidden = false;
+          modal.setAttribute('aria-hidden', 'false');
+          modal.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          showWelcome();
+          input.value = '';
+          historyIndex = history.length;
+          setTimeout(function () {
+            input.focus();
+          }, 50);
+          if (location.hash !== '#terminal') {
+            history.replaceState(null, '', '#terminal');
+          }
+        }
+
+        function closeTerminal() {
+          if (!isOpen) return;
+          isOpen = false;
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          stopMatrix();
+          setTimeout(function () {
+            modal.hidden = true;
+          }, reduceMotion ? 0 : 250);
+          if (location.hash === '#terminal') {
+            history.replaceState(
+              null,
+              '',
+              location.pathname + location.search,
+            );
+          }
+          if (focusBeforeOpen && typeof focusBeforeOpen.focus === 'function') {
+            focusBeforeOpen.focus();
+          }
+        }
+
+        function toggleTerminal() {
+          if (isOpen) closeTerminal();
+          else openTerminal();
+        }
+
+        function openResume() {
+          window.open(PROFILE.resumePath, '_blank', 'noopener,noreferrer');
+        }
+
+        function cmdHelp() {
+          appendLines(
+            [
+              'Tier 1 — essentials',
+              '  help, clear, whoami, about, skills, experience, services',
+              '  contact, resume, exit',
+              '',
+              'Tier 2 — dev depth',
+              '  neofetch, ls, tree, cat, curl resume, hire, history, github',
+              '',
+              'Tier 3 — undocumented',
+              '  sudo, rm -rf, matrix, neon, coffee, fortune, ping, npm install',
+              '  apt install coffee, vim, nano, hello',
+              '',
+              "Try: neofetch → resume → matrix",
+            ],
+            'line--muted',
+          );
+        }
+
+        function cmdWhoami() {
+          appendLines([
+            PROFILE.name + ' — ' + PROFILE.title,
+            PROFILE.years + '+ years · ' + PROFILE.location,
+            PROFILE.availability,
+          ]);
+        }
+
+        function cmdAbout() {
+          appendLines(PROFILE.bio);
+        }
+
+        function cmdSkills() {
+          Object.keys(PROFILE.skills).forEach(function (group) {
+            appendLine(group + ': ' + PROFILE.skills[group].join(', '));
+          });
+        }
+
+        function cmdExperience() {
+          PROFILE.experience.forEach(function (line, i) {
+            appendLine('  ' + String(i + 1).padStart(2, '0') + '  ' + line);
+          });
+        }
+
+        function cmdServices() {
+          PROFILE.services.forEach(function (svc) {
+            appendLine(svc.title + ' — ' + svc.blurb);
+          });
+        }
+
+        function cmdContact() {
+          appendLines([
+            'Email:   ' + PROFILE.email,
+            'LinkedIn: ' + PROFILE.linkedin,
+            'GitHub:  ' + PROFILE.github,
+          ]);
+        }
+
+        function cmdResume() {
+          appendLine('Opening resume: ' + PROFILE.resumePath, 'line--success');
+          openResume();
+        }
+
+        function cmdNeofetch() {
+          const art = [
+            '       ██████╗  ██████╗ ██████╗ ██╗███╗   ██╗',
+            '       ██╔══██╗██╔═══██╗██╔══██╗██║████╗  ██║',
+            '       ██████╔╝██║   ██║██║  ██║██║██╔██╗ ██║',
+            '       ██╔══██╗██║   ██║██║  ██║██║██║╚██╗██║',
+            '       ██████╔╝╚██████╔╝██████╔╝██║██║ ╚████║',
+            '       ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝',
+          ];
+          appendLines(art, 'line--cmd');
+          appendLines([
+            '',
+            PROFILE.name + '@portfolio',
+            '─────────────────────────────',
+            'OS: Portfolio v2 (Vercel)',
+            'Host: jobinmathew.com',
+            'Shell: bash (fake)',
+            'Experience: ' + PROFILE.years + ' years',
+            'Stack: Node.js, React, AWS',
+            'Theme: ' +
+              (document.documentElement.classList.contains('neon')
+                ? 'neon'
+                : document.documentElement.classList.contains('dark')
+                  ? 'dark'
+                  : 'light'),
+          ]);
+        }
+
+        function cmdLs(args) {
+          const path = resolvePath('~', args[0]);
+          const node = PROFILE.vfs[path];
+          if (!node || node.type !== 'dir') {
+            appendLine('ls: cannot access \'' + (args[0] || path) + '\': No such directory', 'line--error');
+            return;
+          }
+          appendLine(node.children.join('  '));
+        }
+
+        function walkTree(path, prefix, isLast) {
+          const node = PROFILE.vfs[path];
+          if (!node) return;
+          const name = path === '~' ? '~' : path.split('/').pop();
+          appendLine(prefix + (isLast ? '└── ' : '├── ') + name);
+          if (node.type !== 'dir') return;
+          const children = node.children;
+          const nextPrefix = prefix + (isLast ? '    ' : '│   ');
+          children.forEach(function (child, i) {
+            const childPath =
+              path === '~' ? '~/' + child : path + '/' + child;
+            walkTree(childPath, nextPrefix, i === children.length - 1);
+          });
+        }
+
+        function cmdTree() {
+          walkTree('~', '', true);
+        }
+
+        function cmdCat(args) {
+          if (!args[0]) {
+            appendLine('cat: missing file operand', 'line--error');
+            return;
+          }
+          const path = resolvePath('~', args[0]);
+          const node = PROFILE.vfs[path];
+          if (!node) {
+            appendLine('cat: ' + args[0] + ': No such file', 'line--error');
+            return;
+          }
+          if (node.binary) {
+            appendLine(
+              'cat: ' + args[0] + ': binary file — try `resume` instead',
+              'line--muted',
+            );
+            return;
+          }
+          if (node.type === 'dir') {
+            appendLine('cat: ' + args[0] + ': Is a directory', 'line--error');
+            return;
+          }
+          appendLines(node.content.replace(/\n$/, '').split('\n'));
+        }
+
+        function cmdCurl(args) {
+          if (args[0] !== 'resume') {
+            appendLine('curl: try `curl resume`', 'line--muted');
+            return;
+          }
+          appendLines([
+            'HTTP/1.1 200 OK',
+            'Content-Type: application/pdf',
+            'Content-Disposition: attachment; filename="Jobin_Mathew_Resume.pdf"',
+            '',
+            '<< binary stream >> Opening in new tab...',
+          ]);
+          openResume();
+        }
+
+        function cmdHire() {
+          appendLines([
+            'Status: ' + PROFILE.availability,
+            '',
+            'Engagement types:',
+            '  • Senior IC / full-stack engineering',
+            '  • Contract & fractional work',
+            '  • Architecture & code review',
+            '',
+            'Reach out: ' + PROFILE.email,
+          ], 'line--success');
+        }
+
+        function cmdHistory() {
+          if (!history.length) {
+            appendLine('(no commands yet)', 'line--muted');
+            return;
+          }
+          history.forEach(function (cmd, i) {
+            appendLine('  ' + (i + 1) + '  ' + cmd);
+          });
+        }
+
+        function cmdGithub() {
+          appendLine('Opening ' + PROFILE.github, 'line--success');
+          window.open(PROFILE.github, '_blank', 'noopener,noreferrer');
+        }
+
+        function cmdSudo(args) {
+          if (args.join(' ') === 'su') {
+            appendLines([
+              '[sudo] password for jobin: ********',
+              'Authenticating...',
+              'Permission denied. Jobin is not in the sudoers file.',
+            ], 'line--error');
+            return;
+          }
+          appendLine(
+            'Permission denied. Jobin is not in the sudoers file.',
+            'line--error',
+          );
+        }
+
+        function cmdRm(args) {
+          const target = args.join(' ');
+          if (target === '-rf /' || target === '-rf /*') {
+            appendLines([
+              'Deleting /boot... done',
+              'Deleting /home... done',
+              'Deleting /var... done',
+              '',
+              'Just kidding. Your portfolio is safe.',
+            ], 'line--error');
+            return;
+          }
+          if (target === '-rf node_modules' || target === '-rf ./node_modules') {
+            appendLine(
+              "Finally, someone who gets it. (It's already gone.)",
+              'line--success',
+            );
+            return;
+          }
+          appendLine('rm: operation not permitted', 'line--error');
+        }
+
+        function stopMatrix() {
+          if (matrixAnimId) {
+            cancelAnimationFrame(matrixAnimId);
+            matrixAnimId = null;
+          }
+          if (matrixTimer) {
+            clearTimeout(matrixTimer);
+            matrixTimer = null;
+          }
+          if (matrixCanvas) {
+            matrixCanvas.classList.remove('is-active');
+            const ctx = matrixCanvas.getContext('2d');
+            if (ctx) ctx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+          }
+        }
+
+        function cmdMatrix() {
+          if (reduceMotion || !matrixCanvas) {
+            appendLine('Matrix rain disabled (prefers-reduced-motion).', 'line--muted');
+            return;
+          }
+          stopMatrix();
+          const win = matrixCanvas.parentElement;
+          matrixCanvas.width = win.clientWidth;
+          matrixCanvas.height = win.clientHeight;
+          matrixCanvas.classList.add('is-active');
+          const ctx = matrixCanvas.getContext('2d');
+          const cols = Math.floor(matrixCanvas.width / 14);
+          const drops = new Array(cols).fill(1);
+          const chars = '01アイウエオカキクケコ';
+          let frame = 0;
+
+          function draw() {
+            ctx.fillStyle = 'rgba(12, 10, 9, 0.08)';
+            ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            ctx.fillStyle = '#22c55e';
+            ctx.font = '14px JetBrains Mono, monospace';
+            for (let i = 0; i < drops.length; i++) {
+              const char = chars[Math.floor(Math.random() * chars.length)];
+              ctx.fillText(char, i * 14, drops[i] * 14);
+              if (drops[i] * 14 > matrixCanvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+              }
+              drops[i]++;
+            }
+            frame++;
+            matrixAnimId = requestAnimationFrame(draw);
+          }
+
+          draw();
+          appendLine('Matrix rain engaged. Stand by...', 'line--cmd');
+          matrixTimer = setTimeout(function () {
+            stopMatrix();
+            appendLine('Matrix rain disengaged.', 'line--muted');
+          }, 3000);
+        }
+
+        function cmdNeon() {
+          const theme = window.__portfolioTheme;
+          if (theme && theme.toggleNeon) {
+            theme.toggleNeon();
+            appendLine(
+              'NEON MODE toggled — ' +
+                (theme.isNeon() ? 'ONLINE' : 'OFFLINE'),
+              'line--cmd',
+            );
+          } else {
+            document.documentElement.classList.toggle('neon');
+            appendLine('NEON MODE toggled', 'line--cmd');
+          }
+        }
+
+        function cmdCoffee() {
+          appendLines([
+            '    ( (',
+            '      ) )',
+            '   .......',
+            '   |      ]',
+            '   \\      /',
+            '    `----\'',
+            '',
+            'Fresh brew. Back to coding.',
+          ], 'line--cmd');
+        }
+
+        function cmdFortune() {
+          const quote =
+            FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
+          appendLine(quote, 'line--muted');
+        }
+
+        function cmdPing(args) {
+          const host = args[0] || 'jobinmathew.com';
+          appendLine('PING ' + host + ' — fake packets', 'line--muted');
+          let seq = 1;
+          function packet() {
+            if (seq > 4) {
+              appendLine('--- ping statistics ---', 'line--muted');
+              appendLine('4 packets transmitted, 4 received, 0% packet loss', 'line--muted');
+              return;
+            }
+            const ms = (8 + Math.random() * 40).toFixed(1);
+            appendLine(
+              '64 bytes from ' + host + ': icmp_seq=' + seq + ' ttl=64 time=' + ms + ' ms',
+            );
+            seq++;
+            setTimeout(packet, 400);
+          }
+          packet();
+        }
+
+        function cmdNpm(args) {
+          if (args[0] === 'install' && args[1] === 'jobin') {
+            appendLine('npm install jobin', 'line--cmd');
+            const steps = [
+              '⠋ Resolving jobin@latest...',
+              '⠙ Downloading charisma...',
+              '⠹ Installing experience@9y...',
+              '⠸ Building reputation...',
+              '✔ added 1 package in 2.4s',
+              '',
+              'jobin@9.0.0 installed successfully. Run `hire` to engage.',
+            ];
+            steps.forEach(function (step, i) {
+              setTimeout(function () {
+                appendLine(step, i === steps.length - 2 ? 'line--success' : null);
+              }, (i + 1) * 450);
+            });
+            return;
+          }
+          appendLine('npm: try `npm install jobin`', 'line--muted');
+        }
+
+        function cmdApt(args) {
+          if (args[0] === 'install' && args[1] === 'coffee') {
+            appendLine(
+              'E: Unable to locate package coffee. Try `coffee` command.',
+              'line--error',
+            );
+            return;
+          }
+          appendLine('apt: command not found (this is a fake shell)', 'line--muted');
+        }
+
+        function cmdEditor() {
+          appendLine('Nice try. This terminal is read-only.', 'line--error');
+        }
+
+        function cmdHello() {
+          appendLine(
+            "Hey! Type 'help' to see what this shell can do.",
+            'line--success',
+          );
+        }
+
+        function runCommand(raw) {
+          const trimmed = raw.trim();
+          if (!trimmed) return;
+
+          const parts = trimmed.split(/\s+/);
+          let name = parts[0].toLowerCase();
+          const args = parts.slice(1);
+
+          if (ALIASES[name]) name = ALIASES[name];
+
+          if (name === 'help') cmdHelp();
+          else if (name === 'clear') clearOutput();
+          else if (name === 'whoami') cmdWhoami();
+          else if (name === 'about') cmdAbout();
+          else if (name === 'skills') cmdSkills();
+          else if (name === 'experience') cmdExperience();
+          else if (name === 'services') cmdServices();
+          else if (name === 'contact') cmdContact();
+          else if (name === 'resume') cmdResume();
+          else if (name === 'exit') closeTerminal();
+          else if (name === 'neofetch') cmdNeofetch();
+          else if (name === 'ls') cmdLs(args);
+          else if (name === 'tree') cmdTree();
+          else if (name === 'cat') cmdCat(args);
+          else if (name === 'curl') cmdCurl(args);
+          else if (name === 'hire') cmdHire();
+          else if (name === 'history') cmdHistory();
+          else if (name === 'github') cmdGithub();
+          else if (name === 'sudo') cmdSudo(args);
+          else if (name === 'rm') cmdRm(args);
+          else if (name === 'matrix') cmdMatrix();
+          else if (name === 'neon') cmdNeon();
+          else if (name === 'coffee') cmdCoffee();
+          else if (name === 'fortune') cmdFortune();
+          else if (name === 'ping') cmdPing(args);
+          else if (name === 'npm') cmdNpm(args);
+          else if (name === 'apt') cmdApt(args);
+          else if (name === 'vim' || name === 'nano') cmdEditor();
+          else if (name === 'hello' || name === 'hi') cmdHello();
+          else {
+            let msg = "command not found: " + parts[0] + ". Type 'help' for available commands.";
+            const hint = suggestCommand(name);
+            if (hint) msg += " Did you mean '" + hint + "'?";
+            appendLine(msg, 'line--error');
+          }
+        }
+
+        function executeInput() {
+          const value = input.value;
+          if (!value.trim()) return;
+          appendLine('> ' + value, 'line--cmd');
+          history.push(value);
+          historyIndex = history.length;
+          tabCycle = { matches: [], index: 0, prefix: '' };
+          runCommand(value);
+          input.value = '';
+        }
+
+        function getCommandMatches(prefix) {
+          const p = prefix.toLowerCase();
+          const all = COMMAND_NAMES.concat(Object.keys(ALIASES));
+          const seen = {};
+          const matches = [];
+          all.forEach(function (cmd) {
+            const resolved = ALIASES[cmd] || cmd;
+            if (resolved.startsWith(p) && !seen[resolved]) {
+              seen[resolved] = true;
+              matches.push(resolved);
+            }
+          });
+          return matches.sort();
+        }
+
+        function onTabComplete(e) {
+          e.preventDefault();
+          const val = input.value;
+          const space = val.indexOf(' ');
+          if (space !== -1) return;
+          const prefix = val;
+          if (
+            tabCycle.prefix !== prefix ||
+            !tabCycle.matches.length
+          ) {
+            tabCycle.matches = getCommandMatches(prefix);
+            tabCycle.index = 0;
+            tabCycle.prefix = prefix;
+          } else {
+            tabCycle.index =
+              (tabCycle.index + 1) % tabCycle.matches.length;
+          }
+          if (tabCycle.matches.length === 1) {
+            input.value = tabCycle.matches[0];
+          } else if (tabCycle.matches.length > 1) {
+            input.value = tabCycle.matches[tabCycle.index];
+            appendLine(tabCycle.matches.join('  '), 'line--muted');
+          }
+        }
+
+        function isFormField(el) {
+          if (!el) return false;
+          const tag = el.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+            return !el.closest('#terminal-modal');
+          }
+          return false;
+        }
+
+        if (trigger) {
+          trigger.addEventListener('click', openTerminal);
+        }
+
+        if (modal) {
+          modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeTerminal();
+          });
+        }
+
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            executeInput();
+          });
+        }
+
+        if (input) {
+          input.addEventListener('keydown', function (e) {
+            if (e.key === 'Tab') onTabComplete(e);
+            else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              if (history.length && historyIndex > 0) {
+                historyIndex--;
+                input.value = history[historyIndex];
+              }
+            } else if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              if (historyIndex < history.length - 1) {
+                historyIndex++;
+                input.value = history[historyIndex];
+              } else {
+                historyIndex = history.length;
+                input.value = '';
+              }
+            } else if (e.key === 'Escape') {
+              e.preventDefault();
+              closeTerminal();
+            }
+          });
+        }
+
+        document.addEventListener('keydown', function (e) {
+          if (e.ctrlKey && e.code === 'Backquote') {
+            if (isFormField(e.target)) return;
+            e.preventDefault();
+            toggleTerminal();
+            return;
+          }
+          if (e.key === 'Escape' && isOpen) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeTerminal();
+          }
+        }, true);
+
+        if (location.hash === '#terminal') {
+          requestAnimationFrame(openTerminal);
+        }
+
+        window.addEventListener('hashchange', function () {
+          if (location.hash === '#terminal') openTerminal();
+          else if (isOpen) closeTerminal();
+        });
       })();
     </script>
   </body>
