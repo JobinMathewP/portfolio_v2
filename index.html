@@ -1,443 +1,1141 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Jobin Mathew | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        brand: '#ea580c', /* The refined orange accent */
-                        dark: '#161513',  /* Deep charcoal for experience section */
-                        offwhite: '#f9f9f8', /* Softer, more premium page background */
-                    }
-                }
-            }
-        }
-    </script>
+    <link
+      rel="icon"
+      href="https://www.google.com/s2/favicons?sz=64&amp;domain=jobinmathew.com"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://www.google.com/s2/favicons?sz=64&amp;domain=jobinmathew.com"
+    />
     <style>
-        body { background-color: #f9f9f8; color: #111; }
-        /* Prevent scroll jump behind fixed header */
-        html { scroll-padding-top: 80px; }
+      :root {
+        /* Palette */
+        --bg: #f5f5f4;
+        --surface: #ffffff;
+        --text: #1c1917;
+        --muted: #a8a29e;
+        --primary: #1c1917;
+        --accent: #f97316;
+
+        /* Radii — sharp */
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 6px;
+
+        /* Shadows — crisp */
+        --shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.06);
+        --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.08);
+        --shadow-lg: 0 12px 32px rgba(28, 25, 23, 0.1);
+
+        /* Typography */
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+        /* Spacing */
+        --section-py: clamp(40px, 5vw, 64px);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-feature-settings: 'ss01', 'cv11';
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .font-display {
+        font-family: var(--font-display);
+        font-feature-settings: 'ss01', 'ss02';
+        letter-spacing: -0.02em;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-display);
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+
+      h1 {
+        line-height: 0.95;
+      }
+      h2 {
+        line-height: 1;
+      }
+      h3 {
+        line-height: 1.08;
+      }
+
+      ::selection {
+        background-color: var(--primary);
+        color: var(--bg);
+      }
+
+      /* Reusable classes */
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.5rem;
+        background-color: var(--primary);
+        color: var(--bg);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        border-radius: var(--radius-md);
+        transition: all 0.25s ease;
+        border: 1px solid var(--primary);
+      }
+
+      .btn-primary:hover {
+        background-color: transparent;
+        color: var(--primary);
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.5rem;
+        background-color: transparent;
+        color: var(--primary);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--primary);
+        transition: all 0.25s ease;
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--primary);
+        color: var(--bg);
+      }
+
+      .card-surface {
+        background-color: var(--surface);
+        border: 1px solid #e7e5e4;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s ease;
+      }
+
+      .card-surface:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary);
+      }
+
+      .icon-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: var(--bg);
+        border: 1px solid #e7e5e4;
+        border-radius: var(--radius-md);
+        color: var(--primary);
+      }
+
+      .section-shell {
+        padding-block: var(--section-py);
+      }
+
+      .eyebrow {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .divider-line {
+        height: 1px;
+        background-color: #e7e5e4;
+        width: 100%;
+      }
+
+      .accent-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background-color: var(--accent);
+        border-radius: 50%;
+      }
     </style>
-</head>
-<body class="font-sans antialiased text-gray-900">
-
-    <div class="fixed top-0 left-0 right-0 z-50 bg-offwhite/80 backdrop-blur-md border-b border-gray-200">
-        <nav class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-            <a href="#" class="font-serif font-bold text-2xl tracking-tight text-gray-900">Jobin Mathew</a>
-            <div class="hidden md:flex space-x-10 text-[13px] text-gray-400 font-medium tracking-wide">
-                <a href="#about" class="hover:text-gray-900 transition-colors">About</a>
-                <a href="#skills" class="hover:text-gray-900 transition-colors">Skills</a>
-                <a href="#experience" class="hover:text-gray-900 transition-colors">Experience</a>
-                <a href="#services" class="hover:text-gray-900 transition-colors">Services</a>
-                <a href="#contact" class="hover:text-gray-900 transition-colors">Contact</a>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tw-animate-css@1.4.0/dist/tw-animate.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+      <header
+        class="sticky top-0 z-50 bg-[var(--bg)]/85 backdrop-blur-md border-b border-[#e7e5e4]"
+      >
+        <nav
+          class="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between"
+        >
+          <a href="./" class="flex items-center gap-2 group"
+            ><span class="font-display text-xl font-semibold tracking-tight"
+              >Jobin Mathew</span
+            ><span
+              class="accent-dot opacity-0 group-hover:opacity-100 transition-opacity"
+            ></span
+          ></a>
+          <div class="hidden md:flex items-center gap-8">
+            <a
+              href="#about"
+              class="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+              >About</a
+            ><a
+              href="#skills"
+              class="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+              >Skills</a
+            ><a
+              href="#experience"
+              class="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+              >Experience</a
+            ><a
+              href="#services"
+              class="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+              >Services</a
+            ><a
+              href="#contact"
+              class="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+              >Contact</a
+            >
+          </div>
+          <a href="#contact" class="hidden md:inline-flex btn-primary text-sm"
+            >Get in touch<i data-lucide="arrow-up-right" class="w-4 h-4"></i
+          ></a>
+          <details class="md:hidden relative">
+            <summary class="list-none cursor-pointer p-2 -mr-2">
+              <i data-lucide="menu" class="w-5 h-5"></i>
+            </summary>
+            <div
+              class="absolute right-0 top-full mt-2 w-56 bg-[var(--surface)] border border-[#e7e5e4] rounded-[var(--radius-md)] shadow-[var(--shadow-md)] p-2"
+            >
+              <a
+                href="#about"
+                class="block px-3 py-2 text-sm hover:bg-[var(--bg)] rounded-[var(--radius-sm)]"
+                >About</a
+              ><a
+                href="#skills"
+                class="block px-3 py-2 text-sm hover:bg-[var(--bg)] rounded-[var(--radius-sm)]"
+                >Skills</a
+              ><a
+                href="#experience"
+                class="block px-3 py-2 text-sm hover:bg-[var(--bg)] rounded-[var(--radius-sm)]"
+                >Experience</a
+              ><a
+                href="#services"
+                class="block px-3 py-2 text-sm hover:bg-[var(--bg)] rounded-[var(--radius-sm)]"
+                >Services</a
+              ><a
+                href="#contact"
+                class="block px-3 py-2 text-sm hover:bg-[var(--bg)] rounded-[var(--radius-sm)]"
+                >Contact</a
+              >
             </div>
-            <a href="#contact" class="hidden md:flex items-center bg-[#18181b] text-white px-5 py-2.5 text-sm font-medium hover:bg-gray-800 transition-colors rounded-sm shadow-sm">
-                Get in touch <span class="ml-2 text-gray-400 font-light">↗</span>
-            </a>
+          </details>
         </nav>
+      </header>
+      <main>
+        <section
+          id="hero"
+          class="section-shell relative overflow-hidden"
+        >
+          <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 lg:py-16">
+            <div
+              class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end"
+            >
+              <div class="lg:col-span-8">
+                <div class="inline-flex items-center gap-2 mb-6">
+                  <span class="accent-dot"></span
+                  ><span class="eyebrow">Portfolio — 2026</span>
+                </div>
+                <h1
+                  class="font-display text-[clamp(2.75rem,7vw,6rem)] font-medium tracking-tight text-[var(--text)] mb-6"
+                >
+                  Hi, I'm
+                  <span class="italic font-light text-[var(--accent)]"
+                    >Jobin</span
+                  >
+                  Mathew.
+                </h1>
+                <p
+                  class="text-lg lg:text-xl text-[var(--muted)] max-w-2xl leading-relaxed mb-8"
+                >
+                  Full-stack developer specializing in scalable backend systems,
+                  modern frontends, and cloud infrastructure. I build
+                  production-grade applications end-to-end.
+                </p>
+                <div class="flex flex-wrap items-center gap-3">
+                  <a href="#contact" class="btn-primary"
+                    >Contact Me<i
+                      data-lucide="arrow-right"
+                      class="w-4 h-4"
+                    ></i></a
+                  ><a href="#services" class="btn-secondary">View Services</a>
+                </div>
+              </div>
+              <div class="lg:col-span-4 lg:pl-8 lg:border-l border-[#e7e5e4]">
+                <div class="space-y-5">
+                  <div>
+                    <div class="eyebrow mb-1">Focus</div>
+                    <div class="font-display text-xl">
+                      JavaScript · Node.js · NestJS
+                    </div>
+                  </div>
+                  <div class="divider-line"></div>
+                  <div>
+                    <div class="eyebrow mb-1">Cloud</div>
+                    <div class="font-display text-xl">
+                      AWS · Docker · Terraform
+                    </div>
+                  </div>
+                  <div class="divider-line"></div>
+                  <div>
+                    <div class="eyebrow mb-1">Frontend</div>
+                    <div class="font-display text-xl">
+                      React · Next.js · Tailwind
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mt-12 lg:mt-16 pt-8 border-t border-[#e7e5e4] flex flex-wrap items-center justify-between gap-4"
+            >
+              <div class="flex items-center gap-6 text-xs text-[var(--muted)]">
+                <span class="inline-flex items-center gap-2"
+                  ><i data-lucide="map-pin" class="w-3.5 h-3.5"></i>Available
+                  remotely</span
+                ><span class="inline-flex items-center gap-2"
+                  ><i
+                    data-lucide="circle-dot"
+                    class="w-3.5 h-3.5 text-[var(--accent)]"
+                  ></i
+                  >Open to opportunities</span
+                >
+              </div>
+              <a
+                href="#about"
+                class="text-xs text-[var(--muted)] hover:text-[var(--text)] inline-flex items-center gap-2 transition-colors"
+                >Scroll to explore<i
+                  data-lucide="arrow-down"
+                  class="w-3.5 h-3.5"
+                ></i
+              ></a>
+            </div>
+          </div>
+        </section>
+        <section
+          id="about"
+          class="section-shell bg-[var(--surface)] border-y border-[#e7e5e4]"
+        >
+          <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+              <div class="lg:col-span-4">
+                <div class="eyebrow mb-3">— About</div>
+                <h2
+                  class="font-display text-4xl lg:text-5xl font-medium tracking-tight mb-4"
+                >
+                  Nine years building
+                  <span class="italic font-light">production systems.</span>
+                </h2>
+              </div>
+              <div class="lg:col-span-7 lg:col-start-6">
+                <p class="text-lg text-[var(--text)] leading-relaxed mb-6">
+                  With 9 years of experience as a full-stack engineer, I
+                  specialize in building robust backend systems, intuitive
+                  frontends, and scalable cloud infrastructure. My expertise
+                  spans the entire development lifecycle, from architecture and
+                  implementation to deployment and optimization.
+                </p>
+                <p class="text-base text-[var(--muted)] leading-relaxed mb-10">
+                  Having thrived in fast-paced startup environments, I bring a
+                  unique blend of technical excellence and product thinking to
+                  every project. I'm passionate about clean architecture,
+                  solving complex problems, and creating solutions that make a
+                  real impact.
+                </p>
+                <div
+                  class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#e7e5e4] border border-[#e7e5e4] rounded-[var(--radius-md)] overflow-hidden"
+                >
+                  <div class="bg-[var(--surface)] p-5">
+                    <div class="font-display text-3xl font-medium">9</div>
+                    <div class="text-xs text-[var(--muted)] mt-1">
+                      Years experience
+                    </div>
+                  </div>
+                  <div class="bg-[var(--surface)] p-5">
+                    <div class="font-display text-3xl font-medium">Full</div>
+                    <div class="text-xs text-[var(--muted)] mt-1">
+                      Stack ownership
+                    </div>
+                  </div>
+                  <div class="bg-[var(--surface)] p-5">
+                    <div class="font-display text-3xl font-medium">AWS</div>
+                    <div class="text-xs text-[var(--muted)] mt-1">
+                      Cloud native
+                    </div>
+                  </div>
+                  <div class="bg-[var(--surface)] p-5">
+                    <div class="font-display text-3xl font-medium">API</div>
+                    <div class="text-xs text-[var(--muted)] mt-1">
+                      Design focus
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="skills" class="section-shell">
+          <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="mb-10 lg:mb-12 max-w-3xl">
+              <div class="eyebrow mb-3">— Capabilities</div>
+              <h2
+                class="font-display text-4xl lg:text-5xl font-medium tracking-tight mb-4"
+              >
+                Skills &amp; <span class="italic font-light">toolkit.</span>
+              </h2>
+              <p class="text-base text-[var(--muted)] leading-relaxed">
+                A focused stack refined over nine years of shipping production
+                systems across startups and scale-ups.
+              </p>
+            </div>
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#e7e5e4] border border-[#e7e5e4] rounded-[var(--radius-md)] overflow-hidden"
+            >
+              <div
+                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+              >
+                <div class="flex items-start justify-between mb-5">
+                  <div class="icon-badge">
+                    <i data-lucide="code-2" class="w-4 h-4"></i>
+                  </div>
+                  <span class="text-xs text-[var(--muted)] font-mono">01</span>
+                </div>
+                <h3
+                  class="font-display text-xl font-medium mb-4 tracking-tight"
+                >
+                  Core Languages
+                </h3>
+                <ul class="space-y-2">
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>JavaScript</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>TypeScript</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>SQL</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>NoSQL</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Python (basic)</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+              >
+                <div class="flex items-start justify-between mb-5">
+                  <div class="icon-badge">
+                    <i data-lucide="server" class="w-4 h-4"></i>
+                  </div>
+                  <span class="text-xs text-[var(--muted)] font-mono">02</span>
+                </div>
+                <h3
+                  class="font-display text-xl font-medium mb-4 tracking-tight"
+                >
+                  Backend
+                </h3>
+                <ul class="space-y-2">
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Node.js</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>NestJS</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Express</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Sequelize</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Mongoose</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+              >
+                <div class="flex items-start justify-between mb-5">
+                  <div class="icon-badge">
+                    <i data-lucide="layout" class="w-4 h-4"></i>
+                  </div>
+                  <span class="text-xs text-[var(--muted)] font-mono">03</span>
+                </div>
+                <h3
+                  class="font-display text-xl font-medium mb-4 tracking-tight"
+                >
+                  Frontend
+                </h3>
+                <ul class="space-y-2">
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>React</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Next.js</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>HTML</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>CSS</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Tailwind</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+              >
+                <div class="flex items-start justify-between mb-5">
+                  <div class="icon-badge">
+                    <i data-lucide="cloud" class="w-4 h-4"></i>
+                  </div>
+                  <span class="text-xs text-[var(--muted)] font-mono">04</span>
+                </div>
+                <h3
+                  class="font-display text-xl font-medium mb-4 tracking-tight"
+                >
+                  Cloud &amp; DevOps
+                </h3>
+                <ul class="space-y-2">
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>AWS (ECS, S3, CloudFront, ACM, Lambda)</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Docker</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>GitHub Actions</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+              >
+                <div class="flex items-start justify-between mb-5">
+                  <div class="icon-badge">
+                    <i data-lucide="wrench" class="w-4 h-4"></i>
+                  </div>
+                  <span class="text-xs text-[var(--muted)] font-mono">05</span>
+                </div>
+                <h3
+                  class="font-display text-xl font-medium mb-4 tracking-tight"
+                >
+                  Tools
+                </h3>
+                <ul class="space-y-2">
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>GitHub</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Postman</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>MongoDB</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Stripe</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Firebase</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Terraform</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+              >
+                <div class="flex items-start justify-between mb-5">
+                  <div class="icon-badge">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  </div>
+                  <span class="text-xs text-[var(--muted)] font-mono">06</span>
+                </div>
+                <h3
+                  class="font-display text-xl font-medium mb-4 tracking-tight"
+                >
+                  Soft Skills
+                </h3>
+                <ul class="space-y-2">
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Problem-solving</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Clean Architecture</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>Mentoring</span>
+                  </li>
+                  <li
+                    class="text-sm text-[var(--muted)] flex items-start gap-2"
+                  >
+                    <span class="accent-dot mt-2 flex-shrink-0"></span
+                    ><span>API Design</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          id="experience"
+          class="section-shell bg-[var(--primary)] text-[var(--bg)]"
+        >
+          <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+              <div class="lg:col-span-5">
+                <div class="eyebrow mb-3 text-[var(--muted)]">— Experience</div>
+                <h2
+                  class="font-display text-4xl lg:text-5xl font-medium tracking-tight mb-6"
+                >
+                  Nine years as a
+                  <span class="italic font-light text-[var(--accent)]"
+                    >full-stack</span
+                  >
+                  developer.
+                </h2>
+                <p
+                  class="text-base text-[var(--muted)] leading-relaxed max-w-md"
+                >
+                  A track record of shipping reliable systems, mentoring teams,
+                  and owning products from architecture to deployment.
+                </p>
+              </div>
+              <div class="lg:col-span-6 lg:col-start-7">
+                <div class="space-y-1">
+                  <div
+                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                  >
+                    <span
+                      class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
+                      >01</span
+                    >
+                    <div class="flex-1">
+                      <p
+                        class="text-lg lg:text-xl font-display font-light leading-snug"
+                      >
+                        Built and scaled production applications end-to-end
+                      </p>
+                    </div>
+                    <i
+                      data-lucide="arrow-up-right"
+                      class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors mt-2 flex-shrink-0"
+                    ></i>
+                  </div>
+                  <div
+                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                  >
+                    <span
+                      class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
+                      >02</span
+                    >
+                    <div class="flex-1">
+                      <p
+                        class="text-lg lg:text-xl font-display font-light leading-snug"
+                      >
+                        Designed REST APIs and backend systems
+                      </p>
+                    </div>
+                    <i
+                      data-lucide="arrow-up-right"
+                      class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors mt-2 flex-shrink-0"
+                    ></i>
+                  </div>
+                  <div
+                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                  >
+                    <span
+                      class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
+                      >03</span
+                    >
+                    <div class="flex-1">
+                      <p
+                        class="text-lg lg:text-xl font-display font-light leading-snug"
+                      >
+                        Managed deployments and cloud infrastructure on AWS
+                      </p>
+                    </div>
+                    <i
+                      data-lucide="arrow-up-right"
+                      class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors mt-2 flex-shrink-0"
+                    ></i>
+                  </div>
+                  <div
+                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                  >
+                    <span
+                      class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
+                      >04</span
+                    >
+                    <div class="flex-1">
+                      <p
+                        class="text-lg lg:text-xl font-display font-light leading-snug"
+                      >
+                        Improved system performance and reliability
+                      </p>
+                    </div>
+                    <i
+                      data-lucide="arrow-up-right"
+                      class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors mt-2 flex-shrink-0"
+                    ></i>
+                  </div>
+                  <div
+                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                  >
+                    <span
+                      class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
+                      >05</span
+                    >
+                    <div class="flex-1">
+                      <p
+                        class="text-lg lg:text-xl font-display font-light leading-snug"
+                      >
+                        Collaborated closely with founders, designers, and
+                        product teams
+                      </p>
+                    </div>
+                    <i
+                      data-lucide="arrow-up-right"
+                      class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors mt-2 flex-shrink-0"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="services" class="section-shell">
+          <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div
+              class="mb-10 lg:mb-12 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6"
+            >
+              <div class="max-w-2xl">
+                <div class="eyebrow mb-3">— What I do</div>
+                <h2
+                  class="font-display text-4xl lg:text-5xl font-medium tracking-tight"
+                >
+                  Services &amp;
+                  <span class="italic font-light">specializations.</span>
+                </h2>
+              </div>
+              <p class="text-sm text-[var(--muted)] max-w-sm lg:text-right">
+                Four core practice areas, refined through years of production
+                work across the stack.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+              <article class="card-surface p-7 lg:p-9 group">
+                <div class="flex items-start justify-between mb-6">
+                  <div class="icon-badge">
+                    <i data-lucide="server-cog" class="w-4 h-4"></i>
+                  </div>
+                  <span class="font-mono text-xs text-[var(--muted)]">01</span>
+                </div>
+                <h3
+                  class="font-display text-2xl lg:text-3xl font-medium tracking-tight mb-3"
+                >
+                  Backend Development
+                </h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-6">
+                  Scalable REST APIs, microservices architecture, and robust
+                  server-side logic using Node.js and NestJS.
+                </p>
+                <div
+                  class="flex items-center gap-2 text-xs text-[var(--text)] font-medium"
+                >
+                  <span class="accent-dot"></span
+                  ><span>Available for engagement</span>
+                </div>
+              </article>
+              <article class="card-surface p-7 lg:p-9 group">
+                <div class="flex items-start justify-between mb-6">
+                  <div class="icon-badge">
+                    <i data-lucide="monitor" class="w-4 h-4"></i>
+                  </div>
+                  <span class="font-mono text-xs text-[var(--muted)]">02</span>
+                </div>
+                <h3
+                  class="font-display text-2xl lg:text-3xl font-medium tracking-tight mb-3"
+                >
+                  Frontend Development
+                </h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-6">
+                  Modern, responsive user interfaces with React, Next.js, and
+                  component-based architectures.
+                </p>
+                <div
+                  class="flex items-center gap-2 text-xs text-[var(--text)] font-medium"
+                >
+                  <span class="accent-dot"></span
+                  ><span>Available for engagement</span>
+                </div>
+              </article>
+              <article class="card-surface p-7 lg:p-9 group">
+                <div class="flex items-start justify-between mb-6">
+                  <div class="icon-badge">
+                    <i data-lucide="cloud-cog" class="w-4 h-4"></i>
+                  </div>
+                  <span class="font-mono text-xs text-[var(--muted)]">03</span>
+                </div>
+                <h3
+                  class="font-display text-2xl lg:text-3xl font-medium tracking-tight mb-3"
+                >
+                  Cloud Architecture
+                </h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-6">
+                  AWS infrastructure design, deployment automation, and
+                  cloud-native application development.
+                </p>
+                <div
+                  class="flex items-center gap-2 text-xs text-[var(--text)] font-medium"
+                >
+                  <span class="accent-dot"></span
+                  ><span>Available for engagement</span>
+                </div>
+              </article>
+              <article class="card-surface p-7 lg:p-9 group">
+                <div class="flex items-start justify-between mb-6">
+                  <div class="icon-badge">
+                    <i data-lucide="workflow" class="w-4 h-4"></i>
+                  </div>
+                  <span class="font-mono text-xs text-[var(--muted)]">04</span>
+                </div>
+                <h3
+                  class="font-display text-2xl lg:text-3xl font-medium tracking-tight mb-3"
+                >
+                  Automation &amp; API Integrations
+                </h3>
+                <p class="text-sm text-[var(--muted)] leading-relaxed mb-6">
+                  Third-party integrations, workflow automation, and seamless
+                  system connectivity.
+                </p>
+                <div
+                  class="flex items-center gap-2 text-xs text-[var(--text)] font-medium"
+                >
+                  <span class="accent-dot"></span
+                  ><span>Available for engagement</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+        <section
+          id="contact"
+          class="section-shell bg-[var(--surface)] border-t border-[#e7e5e4]"
+        >
+          <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+              <div class="lg:col-span-7">
+                <div class="eyebrow mb-3">— Contact</div>
+                <h2
+                  class="font-display text-5xl lg:text-7xl font-medium tracking-tight mb-6 leading-[0.98]"
+                >
+                  Let's build
+                  <span class="italic font-light text-[var(--accent)]"
+                    >something</span
+                  >
+                  together.
+                </h2>
+                <p
+                  class="text-lg text-[var(--muted)] max-w-xl leading-relaxed mb-10"
+                >
+                  Open to select freelance engagements, consulting, and
+                  full-time opportunities. Reach out via email or connect on
+                  social.
+                </p>
+                <div class="flex flex-wrap items-center gap-3">
+                  <a
+                    href="mailto:jeffz.in7@gmail.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-primary"
+                    ><i data-lucide="mail" class="w-4 h-4"></i>Send Email</a
+                  ><a
+                    href="./Jobin_Mathew_Resume.pdf"
+                    download="Jobin_Mathew_Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary"
+                    ><i data-lucide="download" class="w-4 h-4"></i>Download
+                    Resume</a
+                  >
+                </div>
+              </div>
+              <div class="lg:col-span-4 lg:col-start-9">
+                <div class="card-surface p-7">
+                  <div class="eyebrow mb-5">Direct channels</div>
+                  <div class="space-y-5">
+                    <a
+                      href="mailto:jeffz.in7@gmail.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="group flex items-start gap-3 -m-2 p-2 rounded-[var(--radius-sm)] hover:bg-[var(--bg)] transition-colors"
+                      ><div class="icon-badge flex-shrink-0">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="text-xs text-[var(--muted)] mb-0.5">
+                          Email
+                        </div>
+                        <div class="text-sm font-medium truncate">
+                          jeffz.in7@gmail.com
+                        </div>
+                      </div>
+                      <i
+                        data-lucide="arrow-up-right"
+                        class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--text)] transition-colors flex-shrink-0 mt-1"
+                      ></i></a
+                    ><a
+                      href="https://linkedin.com/in/jobinmathew7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="group flex items-start gap-3 -m-2 p-2 rounded-[var(--radius-sm)] hover:bg-[var(--bg)] transition-colors"
+                      ><div class="icon-badge flex-shrink-0">
+                        <i data-lucide="linkedin" class="w-4 h-4"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="text-xs text-[var(--muted)] mb-0.5">
+                          LinkedIn
+                        </div>
+                        <div class="text-sm font-medium truncate">
+                          linkedin.com/in/jobinmathew7
+                        </div>
+                      </div>
+                      <i
+                        data-lucide="arrow-up-right"
+                        class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--text)] transition-colors flex-shrink-0 mt-1"
+                      ></i></a
+                    ><a
+                      href="https://github.com/JobinMathewP"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="group flex items-start gap-3 -m-2 p-2 rounded-[var(--radius-sm)] hover:bg-[var(--bg)] transition-colors"
+                      ><div class="icon-badge flex-shrink-0">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="text-xs text-[var(--muted)] mb-0.5">
+                          GitHub
+                        </div>
+                        <div class="text-sm font-medium truncate">
+                          github.com/jobinmathew
+                        </div>
+                      </div>
+                      <i
+                        data-lucide="arrow-up-right"
+                        class="w-4 h-4 text-[var(--muted)] group-hover:text-[var(--text)] transition-colors flex-shrink-0 mt-1"
+                      ></i
+                    ></a>
+                  </div>
+                  <div class="divider-line my-6"></div>
+                  <div
+                    class="flex items-center gap-2 text-xs text-[var(--muted)]"
+                  >
+                    <span class="accent-dot"></span
+                    ><span>Response time: within 24 hours</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="border-t border-[#e7e5e4] bg-[var(--surface)]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <div>
+              <div
+                class="font-display text-2xl font-semibold tracking-tight mb-2"
+              >
+                Jobin Mathew
+              </div>
+              <p class="text-sm text-[var(--muted)] max-w-xs">
+                Full-stack engineer building scalable systems and modern
+                interfaces.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 text-sm">
+              <span class="eyebrow mb-1">Navigate</span
+              ><a
+                href="#about"
+                class="text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+                >About</a
+              ><a
+                href="#services"
+                class="text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+                >Services</a
+              ><a
+                href="#contact"
+                class="text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+                >Contact</a
+              >
+            </div>
+            <div class="flex flex-col gap-2 text-sm md:items-end">
+              <span class="eyebrow mb-1">Connect</span
+              ><a
+                href="mailto:jeffz.in7@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[var(--muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2"
+                ><i data-lucide="mail" class="w-4 h-4"></i
+                >jeffz.in7@gmail.com</a
+              ><a
+                href="https://linkedin.com/in/jobinmathew7"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[var(--muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2"
+                ><i data-lucide="linkedin" class="w-4 h-4"></i>LinkedIn</a
+              ><a
+                href="https://github.com/JobinMathewP"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[var(--muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2"
+                ><i data-lucide="github" class="w-4 h-4"></i>GitHub</a
+              >
+            </div>
+          </div>
+          <div class="divider-line my-8"></div>
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 text-xs text-[var(--muted)]"
+          >
+            <span>© 2026 Jobin Mathew. All rights reserved.</span
+            ><span class="inline-flex items-center gap-2"
+              ><span class="accent-dot"></span>Available for select
+              engagements</span
+            >
+          </div>
+        </div>
+      </footer>
     </div>
-
-    <header class="max-w-7xl mx-auto px-6 pt-40 pb-20 md:pt-48 md:pb-32 flex flex-col md:flex-row gap-16 md:gap-8 border-b border-gray-200">
-        <div class="md:w-3/5">
-            <div class="flex items-center gap-2 text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-10">
-                <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
-                Portfolio — 2026
-            </div>
-            <h1 class="text-6xl md:text-[5.5rem] font-serif font-medium tracking-tight leading-[1.05] mb-8 text-gray-900">
-                Hi, I'm <span class="text-brand italic font-medium">Jobin</span> Mathew.
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-400 font-light max-w-xl leading-relaxed mb-12">
-                Full-stack developer specializing in scalable backend systems, modern frontends, and cloud infrastructure. I build production-grade applications end-to-end.
-            </p>
-            <div class="flex flex-wrap gap-4">
-                <a href="#contact" class="flex items-center bg-[#18181b] text-white px-7 py-3.5 text-sm font-medium hover:bg-gray-800 transition-colors rounded-sm shadow-sm">
-                    Contact Me <span class="ml-2 font-light">→</span>
-                </a>
-                <a href="#services" class="flex items-center bg-white border border-gray-200 text-gray-900 px-7 py-3.5 text-sm font-medium hover:bg-gray-50 transition-colors rounded-sm shadow-sm">
-                    View Services
-                </a>
-            </div>
-        </div>
-        <div class="md:w-2/5 flex flex-col justify-center gap-8 pl-0 md:pl-16">
-            <div class="border-b border-gray-200 pb-5">
-                <h3 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-3">Focus</h3>
-                <p class="font-serif text-2xl text-gray-900">JavaScript · Node.js · NestJS</p>
-            </div>
-            <div class="border-b border-gray-200 pb-5">
-                <h3 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-3">Cloud</h3>
-                <p class="font-serif text-2xl text-gray-900">AWS · Docker · Terraform</p>
-            </div>
-            <div>
-                <h3 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-3">Frontend</h3>
-                <p class="font-serif text-2xl text-gray-900">React · Next.js · Tailwind</p>
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-7xl mx-auto px-6 py-8 flex justify-between text-[13px] text-gray-400 mb-16">
-        <div class="flex gap-8">
-            <span class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                Available remotely
-            </span>
-            <span class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full border-2 border-brand flex items-center justify-center">
-                    <span class="w-1 h-1 rounded-full bg-brand"></span>
-                </span>
-                Open to opportunities
-            </span>
-        </div>
-        <div class="flex items-center gap-2">Scroll to explore <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
-    </div>
-
-    <section id="about" class="bg-white py-24 md:py-32 border-y border-gray-200">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24">
-            <div class="md:col-span-4">
-                <h2 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-8">— ABOUT</h2>
-                <h3 class="text-5xl md:text-[3.5rem] font-serif leading-[1.1] text-gray-900">
-                    Nine years<br>building<br><span class="italic text-gray-600 font-medium">production</span><br>systems.
-                </h3>
-            </div>
-            <div class="md:col-span-8 flex flex-col justify-center">
-                <p class="text-[1.1rem] text-gray-900 leading-relaxed mb-6 font-medium">
-                    With 9 years of experience as a full-stack engineer, I specialize in building robust backend systems, intuitive frontends, and scalable cloud infrastructure. My expertise spans the entire development lifecycle, from architecture and implementation to deployment and optimization.
-                </p>
-                <p class="text-[1.1rem] text-gray-400 leading-relaxed mb-12 font-light">
-                    Having thrived in fast-paced startup environments, I bring a unique blend of technical excellence and product thinking to every project. I'm passionate about clean architecture, solving complex problems, and creating solutions that make a real impact.
-                </p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 border border-gray-100 rounded-sm">
-                    <div class="p-6 border-b md:border-b-0 md:border-r border-gray-100">
-                        <div class="font-serif text-3xl font-medium mb-1 text-gray-900">9</div>
-                        <div class="text-[11px] text-gray-400 font-medium">Years experience</div>
-                    </div>
-                    <div class="p-6 border-b md:border-b-0 md:border-r border-gray-100">
-                        <div class="font-serif text-3xl font-medium mb-1 text-gray-900">Full</div>
-                        <div class="text-[11px] text-gray-400 font-medium">Stack ownership</div>
-                    </div>
-                    <div class="p-6 border-r border-gray-100">
-                        <div class="font-serif text-3xl font-medium mb-1 text-gray-900">AWS</div>
-                        <div class="text-[11px] text-gray-400 font-medium">Cloud native</div>
-                    </div>
-                    <div class="p-6">
-                        <div class="font-serif text-3xl font-medium mb-1 text-gray-900">API</div>
-                        <div class="text-[11px] text-gray-400 font-medium">Design focus</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="py-24 md:py-32 max-w-7xl mx-auto px-6">
-        <h2 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-6">— CAPABILITIES</h2>
-        <h3 class="text-5xl md:text-[3.5rem] font-serif mb-6 text-gray-900">Skills & <span class="italic text-gray-500">toolkit.</span></h3>
-        <p class="text-lg text-gray-400 max-w-2xl mb-16 font-light">
-            A focused stack refined over nine years of shipping production systems across startups and scale-ups.
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-gray-100 border-t border-l border-gray-200">
-            <div class="p-10 bg-white border-r border-b border-gray-200">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm">
-                        <span class="text-gray-500 font-mono text-[10px]">&lt;/&gt;</span>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-mono">01</span>
-                </div>
-                <h4 class="font-serif text-2xl mb-6 text-gray-900">Core Languages</h4>
-                <ul class="space-y-3 text-[13px] text-gray-400">
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> JavaScript</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> TypeScript</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> SQL</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> NoSQL</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Python (basic)</li>
-                </ul>
-            </div>
-            <div class="p-10 bg-white border-r border-b border-gray-200">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm">
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-mono">02</span>
-                </div>
-                <h4 class="font-serif text-2xl mb-6 text-gray-900">Backend</h4>
-                <ul class="space-y-3 text-[13px] text-gray-400">
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Node.js</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> NestJS</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Express</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Sequelize</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Mongoose</li>
-                </ul>
-            </div>
-            <div class="p-10 bg-white border-r border-b border-gray-200">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm">
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-mono">03</span>
-                </div>
-                <h4 class="font-serif text-2xl mb-6 text-gray-900">Frontend</h4>
-                <ul class="space-y-3 text-[13px] text-gray-400">
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> React</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Next.js</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> HTML</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> CSS</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Tailwind</li>
-                </ul>
-            </div>
-            <div class="p-10 bg-white border-r border-b border-gray-200">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm">
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-mono">04</span>
-                </div>
-                <h4 class="font-serif text-2xl mb-6 text-gray-900">Cloud & DevOps</h4>
-                <ul class="space-y-3 text-[13px] text-gray-400">
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> AWS (ECS, S3, CloudFront, Lambda)</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Docker</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> GitHub Actions</li>
-                </ul>
-            </div>
-            <div class="p-10 bg-white border-r border-b border-gray-200">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm">
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-mono">05</span>
-                </div>
-                <h4 class="font-serif text-2xl mb-6 text-gray-900">Tools</h4>
-                <ul class="space-y-3 text-[13px] text-gray-400">
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> GitHub</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Postman</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> MongoDB</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Stripe</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Firebase</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Terraform</li>
-                </ul>
-            </div>
-            <div class="p-10 bg-white border-r border-b border-gray-200">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm">
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    </div>
-                    <span class="text-[10px] text-gray-400 font-mono">06</span>
-                </div>
-                <h4 class="font-serif text-2xl mb-6 text-gray-900">Soft Skills</h4>
-                <ul class="space-y-3 text-[13px] text-gray-400">
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Problem-solving</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Clean Architecture</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> Mentoring</li>
-                    <li class="flex items-center"><span class="w-1 h-1 rounded-full bg-brand mr-3"></span> API Design</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="experience" class="bg-dark py-24 md:py-32">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-            <div>
-                <h2 class="text-[11px] font-semibold text-gray-500 tracking-widest uppercase mb-8">— EXPERIENCE</h2>
-                <h3 class="text-5xl md:text-[3.5rem] font-serif text-white leading-[1.1] mb-8">
-                    Nine years as a <span class="italic text-brand font-medium">full-stack</span> developer.
-                </h3>
-                <p class="text-gray-400 text-[1.1rem] font-light">
-                    A track record of shipping reliable systems, mentoring teams, and owning products from architecture to deployment.
-                </p>
-            </div>
-            <div class="flex flex-col justify-center">
-                <div class="flex justify-between items-center py-7 border-b border-gray-800 hover:text-brand transition-colors group cursor-default text-white">
-                    <div class="flex items-center gap-6">
-                        <span class="font-mono text-[10px] text-gray-500">01</span>
-                        <span class="font-serif text-xl md:text-2xl text-gray-200">Built and scaled production applications end-to-end</span>
-                    </div>
-                    <span class="text-gray-600 group-hover:text-brand transition-colors font-light">↗</span>
-                </div>
-                <div class="flex justify-between items-center py-7 border-b border-gray-800 hover:text-brand transition-colors group cursor-default text-white">
-                    <div class="flex items-center gap-6">
-                        <span class="font-mono text-[10px] text-gray-500">02</span>
-                        <span class="font-serif text-xl md:text-2xl text-gray-200">Designed REST APIs and backend systems</span>
-                    </div>
-                    <span class="text-gray-600 group-hover:text-brand transition-colors font-light">↗</span>
-                </div>
-                <div class="flex justify-between items-center py-7 border-b border-gray-800 hover:text-brand transition-colors group cursor-default text-white">
-                    <div class="flex items-center gap-6">
-                        <span class="font-mono text-[10px] text-gray-500">03</span>
-                        <span class="font-serif text-xl md:text-2xl text-gray-200">Managed deployments and cloud infrastructure on AWS</span>
-                    </div>
-                    <span class="text-gray-600 group-hover:text-brand transition-colors font-light">↗</span>
-                </div>
-                <div class="flex justify-between items-center py-7 border-b border-gray-800 hover:text-brand transition-colors group cursor-default text-white">
-                    <div class="flex items-center gap-6">
-                        <span class="font-mono text-[10px] text-gray-500">04</span>
-                        <span class="font-serif text-xl md:text-2xl text-gray-200">Improved system performance and reliability</span>
-                    </div>
-                    <span class="text-gray-600 group-hover:text-brand transition-colors font-light">↗</span>
-                </div>
-                <div class="flex justify-between items-center py-7 border-b border-gray-800 hover:text-brand transition-colors group cursor-default text-white">
-                    <div class="flex items-center gap-6">
-                        <span class="font-mono text-[10px] text-gray-500">05</span>
-                        <span class="font-serif text-xl md:text-2xl text-gray-200">Collaborated closely with founders, designers, and product teams</span>
-                    </div>
-                    <span class="text-gray-600 group-hover:text-brand transition-colors font-light">↗</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="py-24 md:py-32 max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
-            <div>
-                <h2 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-6">— WHAT I DO</h2>
-                <h3 class="text-5xl md:text-[3.5rem] font-serif text-gray-900">Services & <span class="italic text-gray-500">specializations.</span></h3>
-            </div>
-            <p class="text-gray-400 text-[13px] max-w-xs md:text-right font-light">
-                Four core practice areas, refined through years of production work across the stack.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-10 border border-gray-200 rounded-sm relative shadow-sm">
-                <span class="absolute top-10 right-10 text-[10px] text-gray-400 font-mono">01</span>
-                <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm mb-8">
-                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
-                </div>
-                <h4 class="font-serif text-3xl mb-4 text-gray-900">Backend Development</h4>
-                <p class="text-gray-400 text-[15px] mb-10 font-light">Scalable REST APIs, microservices architecture, and robust server-side logic using Node.js and NestJS.</p>
-                <div class="flex items-center text-[12px] font-medium text-gray-900">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand mr-3"></span> Available for engagement
-                </div>
-            </div>
-            <div class="bg-white p-10 border border-gray-200 rounded-sm relative shadow-sm">
-                <span class="absolute top-10 right-10 text-[10px] text-gray-400 font-mono">02</span>
-                <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm mb-8">
-                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                </div>
-                <h4 class="font-serif text-3xl mb-4 text-gray-900">Frontend Development</h4>
-                <p class="text-gray-400 text-[15px] mb-10 font-light">Modern, responsive user interfaces with React, Next.js, and component-based architectures.</p>
-                <div class="flex items-center text-[12px] font-medium text-gray-900">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand mr-3"></span> Available for engagement
-                </div>
-            </div>
-            <div class="bg-white p-10 border border-gray-200 rounded-sm relative shadow-sm">
-                <span class="absolute top-10 right-10 text-[10px] text-gray-400 font-mono">03</span>
-                <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm mb-8">
-                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
-                </div>
-                <h4 class="font-serif text-3xl mb-4 text-gray-900">Cloud Architecture</h4>
-                <p class="text-gray-400 text-[15px] mb-10 font-light">AWS infrastructure design, deployment automation, and cloud-native application development.</p>
-                <div class="flex items-center text-[12px] font-medium text-gray-900">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand mr-3"></span> Available for engagement
-                </div>
-            </div>
-            <div class="bg-white p-10 border border-gray-200 rounded-sm relative shadow-sm">
-                <span class="absolute top-10 right-10 text-[10px] text-gray-400 font-mono">04</span>
-                <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm mb-8">
-                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-                </div>
-                <h4 class="font-serif text-3xl mb-4 text-gray-900">Automation & API Integrations</h4>
-                <p class="text-gray-400 text-[15px] mb-10 font-light">Third-party integrations, workflow automation, and seamless system connectivity.</p>
-                <div class="flex items-center text-[12px] font-medium text-gray-900">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand mr-3"></span> Available for engagement
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-24 md:py-32 bg-white border-t border-gray-200">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div>
-                <h2 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-8">— CONTACT</h2>
-                <h3 class="text-5xl md:text-[4rem] font-serif leading-[1.05] mb-8 text-gray-900">
-                    Let's build <span class="italic text-brand font-medium">something</span> together.
-                </h3>
-                <p class="text-[1.1rem] text-gray-400 mb-10 max-w-md font-light">
-                    Open to select freelance engagements, consulting, and full-time opportunities. Reach out via email or connect on social.
-                </p>
-                <div class="flex gap-4">
-                    <a href="mailto:jeffz.in7@gmail.com" class="flex items-center bg-[#18181b] text-white px-6 py-3.5 text-sm font-medium hover:bg-gray-800 transition-colors rounded-sm shadow-sm">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Send Email
-                    </a>
-                    <button class="flex items-center bg-white border border-gray-200 text-gray-900 px-6 py-3.5 text-sm font-medium hover:bg-gray-50 transition-colors rounded-sm shadow-sm">
-                        <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Download Resume
-                    </button>
-                </div>
-            </div>
-            
-            <div class="flex md:justify-end">
-                <div class="border border-gray-200 bg-white rounded-sm p-10 w-full max-w-md shadow-sm h-fit">
-                    <h4 class="text-[11px] font-semibold text-gray-400 tracking-widest uppercase mb-8">DIRECT CHANNELS</h4>
-                    
-                    <a href="mailto:jeffz.in7@gmail.com" class="flex items-center justify-between group mb-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm group-hover:bg-gray-100 transition-colors">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <div>
-                                <div class="text-[11px] text-gray-400 mb-0.5">Email</div>
-                                <div class="text-[13px] font-medium text-gray-900">jeffz.in7@gmail.com</div>
-                            </div>
-                        </div>
-                        <span class="text-gray-300 group-hover:text-gray-900 transition-colors font-light">↗</span>
-                    </a>
-
-                    <a href="https://linkedin.com/in/jobinmathew" target="_blank" class="flex items-center justify-between group mb-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm group-hover:bg-gray-100 transition-colors">
-                                <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </div>
-                            <div>
-                                <div class="text-[11px] text-gray-400 mb-0.5">LinkedIn</div>
-                                <div class="text-[13px] font-medium text-gray-900">linkedin.com/in/jobinmathew7</div>
-                            </div>
-                        </div>
-                        <span class="text-gray-300 group-hover:text-gray-900 transition-colors font-light">↗</span>
-                    </a>
-
-                    <a href="https://github.com/jobinmathew" target="_blank" class="flex items-center justify-between group mb-10">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center bg-offwhite border border-gray-100 rounded-sm group-hover:bg-gray-100 transition-colors">
-                                <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                            </div>
-                            <div>
-                                <div class="text-[11px] text-gray-400 mb-0.5">GitHub</div>
-                                <div class="text-[13px] font-medium text-gray-900">github.com/jobinmathew</div>
-                            </div>
-                        </div>
-                        <span class="text-gray-300 group-hover:text-gray-900 transition-colors font-light">↗</span>
-                    </a>
-
-                    <div class="flex items-center text-[11px] font-medium text-gray-400 pt-6 border-t border-gray-100">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brand mr-2"></span> Response time: within 24 hours
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-8 bg-white border-t border-gray-200">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[12px] text-gray-400">
-            <div class="mb-4 md:mb-0">© 2026 Jobin Mathew. All rights reserved.</div>
-            <div class="flex gap-6">
-                <a href="#" class="hover:text-gray-900 transition-colors">jeffz.in7@gmail.com</a>
-                <a href="#" class="hover:text-gray-900 transition-colors">LinkedIn</a>
-                <a href="#" class="hover:text-gray-900 transition-colors">GitHub</a>
-            </div>
-        </div>
-    </footer>
-
-</body>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
 </html>
