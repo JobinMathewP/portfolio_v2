@@ -21,6 +21,8 @@
         --muted: #a8a29e;
         --primary: #1c1917;
         --accent: #f97316;
+        --border: #e7e5e4;
+        --border-strong: #44403c;
 
         /* Radii — sharp */
         --radius-sm: 2px;
@@ -128,7 +130,7 @@
 
       .card-surface {
         background-color: var(--surface);
-        border: 1px solid #e7e5e4;
+        border: 1px solid var(--border);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-sm);
         transition: all 0.3s ease;
@@ -146,7 +148,7 @@
         width: 2.5rem;
         height: 2.5rem;
         background-color: var(--bg);
-        border: 1px solid #e7e5e4;
+        border: 1px solid var(--border);
         border-radius: var(--radius-md);
         color: var(--primary);
       }
@@ -166,7 +168,7 @@
 
       .divider-line {
         height: 1px;
-        background-color: #e7e5e4;
+        background-color: var(--border);
         width: 100%;
       }
 
@@ -176,6 +178,194 @@
         height: 6px;
         background-color: var(--accent);
         border-radius: 50%;
+      }
+
+      /* Custom cursor */
+      html.has-custom-cursor,
+      html.has-custom-cursor * {
+        cursor: none !important;
+      }
+
+      .cursor-dot,
+      .cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 99999;
+        visibility: hidden;
+        will-change: transform;
+      }
+
+      html.has-custom-cursor .cursor-dot.is-active,
+      html.has-custom-cursor .cursor-ring.is-active {
+        visibility: visible;
+      }
+
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        margin: -3px 0 0 -3px;
+        border-radius: 50%;
+        background-color: var(--accent);
+        box-shadow:
+          0 0 6px var(--accent),
+          0 0 14px color-mix(in srgb, var(--accent) 50%, transparent);
+      }
+
+      .cursor-ring {
+        width: 36px;
+        height: 36px;
+        margin: -18px 0 0 -18px;
+        border-radius: 50%;
+        border: 1.5px solid var(--accent);
+        opacity: 0.55;
+        box-shadow:
+          0 0 8px var(--accent),
+          0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+        transition:
+          width 0.2s ease,
+          height 0.2s ease,
+          margin 0.2s ease,
+          border-color 0.2s ease,
+          opacity 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .cursor-ring.is-hover {
+        width: 48px;
+        height: 48px;
+        margin: -24px 0 0 -24px;
+        opacity: 0.85;
+        box-shadow:
+          0 0 12px var(--accent),
+          0 0 28px color-mix(in srgb, var(--accent) 55%, transparent);
+      }
+
+      /* Neon Konami theme */
+      html.neon {
+        --bg: #07070f;
+        --surface: #12121f;
+        --text: #f5f3ff;
+        --muted: #a78bfa;
+        --primary: #22d3ee;
+        --accent: #f472b6;
+        --border: #2e1064;
+        --border-strong: #4c1d95;
+        --shadow-sm: 0 0 12px rgba(34, 211, 238, 0.15);
+        --shadow-md: 0 0 24px rgba(244, 114, 182, 0.2);
+        --shadow-lg: 0 0 40px rgba(34, 211, 238, 0.25);
+      }
+
+      html.neon body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 50% at 20% 40%,
+            rgba(34, 211, 238, 0.12),
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse 60% 40% at 80% 20%,
+            rgba(244, 114, 182, 0.1),
+            transparent 45%
+          ),
+          radial-gradient(
+            ellipse 50% 60% at 60% 80%,
+            rgba(167, 139, 250, 0.08),
+            transparent 50%
+          );
+        animation: neonMesh 12s ease-in-out infinite alternate;
+      }
+
+      @keyframes neonMesh {
+        0% {
+          opacity: 0.7;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+      }
+
+      html.neon .min-h-screen {
+        position: relative;
+        z-index: 1;
+      }
+
+      html.neon .btn-primary,
+      html.neon .btn-secondary:hover {
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.35);
+      }
+
+      html.neon .btn-secondary {
+        box-shadow: 0 0 12px rgba(244, 114, 182, 0.15);
+      }
+
+      html.neon .card-surface:hover {
+        box-shadow: var(--shadow-md), 0 0 28px rgba(244, 114, 182, 0.2);
+      }
+
+      html.neon .cursor-ring {
+        opacity: 0.7;
+        box-shadow:
+          0 0 10px var(--accent),
+          0 0 22px var(--primary),
+          0 0 32px color-mix(in srgb, var(--accent) 45%, transparent);
+      }
+
+      html.neon .cursor-dot {
+        box-shadow:
+          0 0 8px var(--accent),
+          0 0 16px var(--primary);
+      }
+
+      html.neon .cursor-ring.is-hover {
+        box-shadow:
+          0 0 14px var(--accent),
+          0 0 28px var(--primary),
+          0 0 40px color-mix(in srgb, var(--accent) 55%, transparent);
+      }
+
+      /* Theme toast */
+      .theme-toast {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(120%);
+        z-index: 100000;
+        padding: 0.625rem 1.25rem;
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.25s ease;
+        pointer-events: none;
+      }
+
+      .theme-toast.is-visible {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+
+      html.neon .theme-toast {
+        color: var(--primary);
+        border-color: var(--accent);
+        box-shadow: 0 0 24px rgba(244, 114, 182, 0.4);
       }
     </style>
     <link
@@ -190,9 +380,12 @@
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="theme-toast" id="theme-toast" role="status" aria-live="polite"></div>
     <div class="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <header
-        class="sticky top-0 z-50 bg-[var(--bg)]/85 backdrop-blur-md border-b border-[#e7e5e4]"
+        class="sticky top-0 z-50 bg-[var(--bg)]/85 backdrop-blur-md border-b border-[var(--border)]"
       >
         <nav
           class="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between"
@@ -235,7 +428,7 @@
               <i data-lucide="menu" class="w-5 h-5"></i>
             </summary>
             <div
-              class="absolute right-0 top-full mt-2 w-56 bg-[var(--surface)] border border-[#e7e5e4] rounded-[var(--radius-md)] shadow-[var(--shadow-md)] p-2"
+              class="absolute right-0 top-full mt-2 w-56 bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-md)] shadow-[var(--shadow-md)] p-2"
             >
               <a
                 href="#about"
@@ -301,7 +494,7 @@
                   ><a href="#services" class="btn-secondary">View Services</a>
                 </div>
               </div>
-              <div class="lg:col-span-4 lg:pl-8 lg:border-l border-[#e7e5e4]">
+              <div class="lg:col-span-4 lg:pl-8 lg:border-l border-[var(--border)]">
                 <div class="space-y-5">
                   <div>
                     <div class="eyebrow mb-1">Focus</div>
@@ -327,7 +520,7 @@
               </div>
             </div>
             <div
-              class="mt-12 lg:mt-16 pt-8 border-t border-[#e7e5e4] flex flex-wrap items-center justify-between gap-4"
+              class="mt-12 lg:mt-16 pt-8 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4"
             >
               <div class="flex items-center gap-6 text-xs text-[var(--muted)]">
                 <span class="inline-flex items-center gap-2"
@@ -354,7 +547,7 @@
         </section>
         <section
           id="about"
-          class="section-shell bg-[var(--surface)] border-y border-[#e7e5e4]"
+          class="section-shell bg-[var(--surface)] border-y border-[var(--border)]"
         >
           <div class="max-w-7xl mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
@@ -383,7 +576,7 @@
                   real impact.
                 </p>
                 <div
-                  class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#e7e5e4] border border-[#e7e5e4] rounded-[var(--radius-md)] overflow-hidden"
+                  class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-md)] overflow-hidden"
                 >
                   <div class="bg-[var(--surface)] p-5">
                     <div class="font-display text-3xl font-medium">9</div>
@@ -429,7 +622,7 @@
               </p>
             </div>
             <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#e7e5e4] border border-[#e7e5e4] rounded-[var(--radius-md)] overflow-hidden"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-md)] overflow-hidden"
             >
               <div
                 class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
@@ -731,7 +924,7 @@
               <div class="lg:col-span-6 lg:col-start-7">
                 <div class="space-y-1">
                   <div
-                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                    class="group flex items-start gap-5 py-5 border-b border-[var(--border-strong)] last:border-b-0"
                   >
                     <span
                       class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
@@ -750,7 +943,7 @@
                     ></i>
                   </div>
                   <div
-                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                    class="group flex items-start gap-5 py-5 border-b border-[var(--border-strong)] last:border-b-0"
                   >
                     <span
                       class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
@@ -769,7 +962,7 @@
                     ></i>
                   </div>
                   <div
-                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                    class="group flex items-start gap-5 py-5 border-b border-[var(--border-strong)] last:border-b-0"
                   >
                     <span
                       class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
@@ -788,7 +981,7 @@
                     ></i>
                   </div>
                   <div
-                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                    class="group flex items-start gap-5 py-5 border-b border-[var(--border-strong)] last:border-b-0"
                   >
                     <span
                       class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
@@ -807,7 +1000,7 @@
                     ></i>
                   </div>
                   <div
-                    class="group flex items-start gap-5 py-5 border-b border-[#44403c] last:border-b-0"
+                    class="group flex items-start gap-5 py-5 border-b border-[var(--border-strong)] last:border-b-0"
                   >
                     <span
                       class="font-mono text-xs text-[var(--muted)] pt-1.5 w-8 flex-shrink-0"
@@ -948,7 +1141,7 @@
         </section>
         <section
           id="contact"
-          class="section-shell bg-[var(--surface)] border-t border-[#e7e5e4]"
+          class="section-shell bg-[var(--surface)] border-t border-[var(--border)]"
         >
           <div class="max-w-7xl mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
@@ -1018,7 +1211,7 @@
                       rel="noopener noreferrer"
                       class="group flex items-start gap-3 -m-2 p-2 rounded-[var(--radius-sm)] hover:bg-[var(--bg)] transition-colors"
                       ><div class="icon-badge flex-shrink-0">
-                        <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                       </div>
                       <div class="min-w-0 flex-1">
                         <div class="text-xs text-[var(--muted)] mb-0.5">
@@ -1038,7 +1231,7 @@
                       rel="noopener noreferrer"
                       class="group flex items-start gap-3 -m-2 p-2 rounded-[var(--radius-sm)] hover:bg-[var(--bg)] transition-colors"
                       ><div class="icon-badge flex-shrink-0">
-                        <i data-lucide="github" class="w-4 h-4"></i>
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                       </div>
                       <div class="min-w-0 flex-1">
                         <div class="text-xs text-[var(--muted)] mb-0.5">
@@ -1067,7 +1260,7 @@
           </div>
         </section>
       </main>
-      <footer class="border-t border-[#e7e5e4] bg-[var(--surface)]">
+      <footer class="border-t border-[var(--border)] bg-[var(--surface)]">
         <div class="max-w-7xl mx-auto px-6 lg:px-10 py-10">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             <div>
@@ -1111,13 +1304,13 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-[var(--muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2"
-                ><i data-lucide="linkedin" class="w-4 h-4"></i>LinkedIn</a
+                ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>LinkedIn</a
               ><a
                 href="https://github.com/JobinMathewP"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-[var(--muted)] hover:text-[var(--text)] transition-colors inline-flex items-center gap-2"
-                ><i data-lucide="github" class="w-4 h-4"></i>GitHub</a
+                ><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>GitHub</a
               >
             </div>
           </div>
@@ -1136,6 +1329,190 @@
     </div>
     <script>
       lucide.createIcons();
+
+      (function () {
+        const KONAMI = [
+          'ArrowUp',
+          'ArrowUp',
+          'ArrowDown',
+          'ArrowDown',
+          'ArrowLeft',
+          'ArrowRight',
+          'ArrowLeft',
+          'ArrowRight',
+          'KeyB',
+          'KeyA',
+        ];
+        const KONAMI_LABELS = [
+          '↑',
+          '↑',
+          '↓',
+          '↓',
+          '←',
+          '→',
+          '←',
+          '→',
+          'B',
+          'A',
+        ];
+        const STORAGE_KEY = 'theme-mode';
+        const html = document.documentElement;
+        const toast = document.getElementById('theme-toast');
+        let konamiIndex = 0;
+        let toastTimer = null;
+
+        function logKonami(message, detail) {
+          if (detail !== undefined) {
+            console.log('[Konami]', message, detail);
+          } else {
+            console.log('[Konami]', message);
+          }
+        }
+
+        logKonami(
+          'listening — type: ↑ ↑ ↓ ↓ ← → ← → B A (uses e.code: ArrowUp, KeyB, KeyA, etc.)',
+        );
+
+        function isNeon() {
+          return html.classList.contains('neon');
+        }
+
+        function showToast(message) {
+          if (!toast) return;
+          toast.textContent = message;
+          toast.classList.add('is-visible');
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(function () {
+            toast.classList.remove('is-visible');
+          }, 2000);
+        }
+
+        function setNeon(enabled) {
+          html.classList.toggle('neon', enabled);
+          try {
+            localStorage.setItem(STORAGE_KEY, enabled ? 'neon' : 'default');
+          } catch (e) {}
+          showToast(enabled ? 'NEON MODE ONLINE' : 'NEON MODE OFFLINE');
+        }
+
+        function toggleNeon() {
+          setNeon(!isNeon());
+        }
+
+        try {
+          if (localStorage.getItem(STORAGE_KEY) === 'neon') {
+            html.classList.add('neon');
+          }
+        } catch (e) {}
+
+        document.addEventListener(
+          'keydown',
+          function (e) {
+            if (e.key === 'Escape' && isNeon()) {
+              setNeon(false);
+              konamiIndex = 0;
+              logKonami('reset — Escape exited neon mode');
+              return;
+            }
+
+            const expected = KONAMI[konamiIndex];
+            logKonami('keystroke', {
+              code: e.code,
+              key: e.key,
+              expected: expected + ' (' + KONAMI_LABELS[konamiIndex] + ')',
+              progress: konamiIndex + '/' + KONAMI.length,
+            });
+
+            if (e.code === expected) {
+              konamiIndex += 1;
+              logKonami(
+                'match ✓',
+                KONAMI_LABELS[konamiIndex - 1] +
+                  ' — progress ' +
+                  konamiIndex +
+                  '/' +
+                  KONAMI.length,
+              );
+
+              if (konamiIndex === KONAMI.length) {
+                konamiIndex = 0;
+                logKonami('Neon Konami activating');
+                toggleNeon();
+              }
+              return;
+            }
+
+            const restarted = e.code === KONAMI[0];
+            konamiIndex = restarted ? 1 : 0;
+            logKonami(
+              restarted ? 'reset — wrong key, restarted at ↑ (1/10)' : 'reset — wrong key, back to 0/10',
+              { got: e.code, wanted: expected },
+            );
+
+            if (restarted) {
+              logKonami('match ✓', '↑ — progress 1/' + KONAMI.length);
+            }
+          },
+          true,
+        );
+
+        const finePointer = window.matchMedia('(pointer: fine)').matches;
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        if (!finePointer) return;
+
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        if (!dot || !ring) return;
+
+        html.classList.add('has-custom-cursor');
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let ringX = 0;
+        let ringY = 0;
+        let visible = false;
+        const lerp = reduceMotion ? 1 : 0.15;
+
+        const interactive =
+          'a, button, [role="button"], summary, input, textarea, select, label';
+
+        function setVisible(show) {
+          visible = show;
+          dot.classList.toggle('is-active', show);
+          ring.classList.toggle('is-active', show);
+        }
+
+        document.addEventListener('mousemove', function (e) {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          if (!visible) setVisible(true);
+          dot.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px)';
+
+          const target = document.elementFromPoint(e.clientX, e.clientY);
+          if (target && target.closest(interactive)) {
+            ring.classList.add('is-hover');
+          } else {
+            ring.classList.remove('is-hover');
+          }
+        });
+
+        document.addEventListener('mouseleave', function () {
+          setVisible(false);
+        });
+
+        function tick() {
+          ringX += (mouseX - ringX) * lerp;
+          ringY += (mouseY - ringY) * lerp;
+          ring.style.transform =
+            'translate(' + ringX + 'px, ' + ringY + 'px)';
+          requestAnimationFrame(tick);
+        }
+
+        tick();
+      })();
     </script>
   </body>
 </html>
