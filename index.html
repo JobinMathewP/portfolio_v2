@@ -12,6 +12,28 @@
       rel="shortcut icon"
       href="https://www.google.com/s2/favicons?sz=64&amp;domain=jobinmathew.com"
     />
+    <script>
+      (function () {
+        try {
+          var neon = localStorage.getItem('theme-mode') === 'neon';
+          var scheme = localStorage.getItem('color-scheme');
+          if (neon) {
+            document.documentElement.classList.add('neon');
+          }
+          if (scheme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else if (scheme === 'light') {
+            /* light — no dark class */
+          } else if (neon) {
+            document.documentElement.classList.add('dark');
+          } else if (
+            window.matchMedia('(prefers-color-scheme: dark)').matches
+          ) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <style>
       :root {
         /* Palette */
@@ -23,6 +45,10 @@
         --accent: #f97316;
         --border: #e7e5e4;
         --border-strong: #44403c;
+        --experience-bg: #1c1917;
+        --experience-text: #f5f5f4;
+        --experience-muted: #a8a29e;
+        --experience-border: #44403c;
 
         /* Radii — sharp */
         --radius-sm: 2px;
@@ -157,6 +183,11 @@
         padding-block: var(--section-py);
       }
 
+      #experience {
+        --muted: var(--experience-muted);
+        --border-strong: var(--experience-border);
+      }
+
       .eyebrow {
         font-family: var(--font-body);
         font-size: 0.75rem;
@@ -178,6 +209,209 @@
         height: 6px;
         background-color: var(--accent);
         border-radius: 50%;
+      }
+
+      /* Dark mode (default palette) */
+      html.dark:not(.neon) {
+        --bg: #0c0a09;
+        --surface: #1c1917;
+        --text: #fafaf9;
+        --muted: #a8a29e;
+        --primary: #fafaf9;
+        --accent: #fb923c;
+        --border: #44403c;
+        --border-strong: #57534e;
+        --experience-bg: #1c1917;
+        --experience-text: #fafaf9;
+        --experience-muted: #a8a29e;
+        --experience-border: #44403c;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+        --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+      }
+
+      /* Theme toggle — neumorphic pill slider */
+      .theme-toggle {
+        position: relative;
+        display: inline-flex;
+        padding: 0;
+        border: none;
+        background: transparent;
+        flex-shrink: 0;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .theme-toggle:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+        border-radius: 9999px;
+      }
+
+      .theme-toggle:active .theme-toggle__knob {
+        transform: scale(0.94);
+      }
+
+      html.dark .theme-toggle:active .theme-toggle__knob {
+        transform: translateX(2.375rem) scale(0.94);
+      }
+
+      .theme-toggle__track {
+        position: relative;
+        display: block;
+        width: 4.75rem;
+        height: 2.375rem;
+        border-radius: 9999px;
+        background: var(--bg);
+        box-shadow:
+          inset 4px 4px 9px color-mix(in srgb, var(--text) 14%, transparent),
+          inset -3px -3px 8px color-mix(in srgb, #ffffff 70%, var(--bg));
+        transition:
+          background-color 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      html.dark .theme-toggle__track {
+        box-shadow:
+          inset 4px 4px 11px rgba(0, 0, 0, 0.55),
+          inset -2px -2px 7px rgba(255, 255, 255, 0.07);
+      }
+
+      .theme-toggle__ghost {
+        position: absolute;
+        top: 50%;
+        width: 1rem;
+        height: 1rem;
+        margin-top: -0.5rem;
+        color: var(--muted);
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+
+      .theme-toggle__ghost--sun {
+        left: 0.8rem;
+        opacity: 0.2;
+      }
+
+      .theme-toggle__ghost--moon {
+        right: 0.8rem;
+        opacity: 0.45;
+      }
+
+      html.dark .theme-toggle__ghost--sun {
+        opacity: 0.45;
+      }
+
+      html.dark .theme-toggle__ghost--moon {
+        opacity: 0.15;
+      }
+
+      .theme-toggle__knob {
+        position: absolute;
+        top: 0.25rem;
+        left: 0.25rem;
+        width: 1.875rem;
+        height: 1.875rem;
+        border-radius: 50%;
+        background: #f97316;
+        box-shadow:
+          3px 4px 10px color-mix(in srgb, var(--text) 20%, transparent),
+          -2px -2px 7px color-mix(in srgb, #ffffff 55%, transparent);
+        transition:
+          transform 0.45s cubic-bezier(0.34, 1.25, 0.64, 1),
+          background-color 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      html.dark .theme-toggle__knob {
+        transform: translateX(2.375rem);
+        background: #5b8def;
+        box-shadow:
+          3px 4px 12px rgba(0, 0, 0, 0.4),
+          -1px -1px 5px rgba(255, 255, 255, 0.12);
+      }
+
+      html.neon:not(.dark) .theme-toggle__knob {
+        background: var(--accent);
+      }
+
+      html.neon.dark .theme-toggle__knob {
+        background: var(--primary);
+      }
+
+      .theme-toggle__knob-icon {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 1rem;
+        height: 1rem;
+        color: #ffffff;
+        transition:
+          opacity 0.3s ease,
+          transform 0.35s cubic-bezier(0.34, 1.25, 0.64, 1);
+      }
+
+      .theme-toggle__knob-icon--sun {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .theme-toggle__knob-icon--moon {
+        opacity: 0;
+        transform: scale(0.65);
+      }
+
+      html.dark .theme-toggle__knob-icon--sun {
+        opacity: 0;
+        transform: scale(0.65);
+      }
+
+      html.dark .theme-toggle__knob-icon--moon {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .theme-reveal-pulse {
+        position: fixed;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99998;
+        transform: translate(-50%, -50%) scale(0);
+        background: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--accent) 55%, transparent) 0%,
+          transparent 72%
+        );
+        opacity: 0;
+      }
+
+      .theme-reveal-pulse.is-active {
+        animation: themeRevealPulse 0.65s ease-out forwards;
+      }
+
+      @keyframes themeRevealPulse {
+        0% {
+          transform: translate(-50%, -50%) scale(0.2);
+          opacity: 0.85;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(5);
+          opacity: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .theme-reveal-pulse.is-active {
+          animation: none;
+          opacity: 0;
+        }
+
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+          animation: none !important;
+        }
       }
 
       /* Custom cursor */
@@ -242,8 +476,8 @@
           0 0 28px color-mix(in srgb, var(--accent) 55%, transparent);
       }
 
-      /* Neon Konami theme */
-      html.neon {
+      /* Neon Konami theme — dark variant */
+      html.neon.dark {
         --bg: #07070f;
         --surface: #12121f;
         --text: #f5f3ff;
@@ -252,9 +486,32 @@
         --accent: #f472b6;
         --border: #2e1064;
         --border-strong: #4c1d95;
+        --experience-bg: #b11eff;
+        --experience-text: #f5f3ff;
+        --experience-muted: #e9d5ff;
+        --experience-border: rgba(255, 255, 255, 0.22);
         --shadow-sm: 0 0 12px rgba(34, 211, 238, 0.15);
         --shadow-md: 0 0 24px rgba(244, 114, 182, 0.2);
         --shadow-lg: 0 0 40px rgba(34, 211, 238, 0.25);
+      }
+
+      /* Neon Konami theme — light variant */
+      html.neon:not(.dark) {
+        --bg: #eef2ff;
+        --surface: #ffffff;
+        --text: #312e81;
+        --muted: #7c3aed;
+        --primary: #0891b2;
+        --accent: #e11d48;
+        --border: #c7d2fe;
+        --border-strong: #a5b4fc;
+        --experience-bg: #9333ea;
+        --experience-text: #eef2ff;
+        --experience-muted: #ede9fe;
+        --experience-border: rgba(255, 255, 255, 0.3);
+        --shadow-sm: 0 0 12px rgba(8, 145, 178, 0.12);
+        --shadow-md: 0 0 20px rgba(225, 29, 72, 0.15);
+        --shadow-lg: 0 0 32px rgba(8, 145, 178, 0.2);
       }
 
       html.neon body::before {
@@ -382,6 +639,7 @@
   <body>
     <div class="cursor-dot" aria-hidden="true"></div>
     <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="theme-reveal-pulse" id="theme-reveal-pulse" aria-hidden="true"></div>
     <div class="theme-toast" id="theme-toast" role="status" aria-live="polite"></div>
     <div class="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <header
@@ -390,14 +648,14 @@
         <nav
           class="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between"
         >
-          <a href="./" class="flex items-center gap-2 group"
+          <a href="./" class="flex items-center gap-2 group shrink-0"
             ><span class="font-display text-xl font-semibold tracking-tight"
               >Jobin Mathew</span
             ><span
               class="accent-dot opacity-0 group-hover:opacity-100 transition-opacity"
             ></span
           ></a>
-          <div class="hidden md:flex items-center gap-8">
+          <div class="hidden md:flex items-center justify-center flex-1 gap-8">
             <a
               href="#about"
               class="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors"
@@ -420,10 +678,78 @@
               >Contact</a
             >
           </div>
-          <a href="#contact" class="hidden md:inline-flex btn-primary text-sm"
-            >Get in touch<i data-lucide="arrow-up-right" class="w-4 h-4"></i
-          ></a>
-          <details class="md:hidden relative">
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              id="theme-toggle"
+              type="button"
+              class="theme-toggle"
+              aria-label="Toggle dark mode"
+              aria-pressed="false"
+            >
+              <span class="theme-toggle__track">
+                <svg
+                  class="theme-toggle__ghost theme-toggle__ghost--sun"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+                <svg
+                  class="theme-toggle__ghost theme-toggle__ghost--moon"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"
+                  ></path>
+                </svg>
+                <span class="theme-toggle__knob" aria-hidden="true">
+                  <svg
+                    class="theme-toggle__knob-icon theme-toggle__knob-icon--sun"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="4.25"></circle>
+                    <path d="M12 2.5v2"></path>
+                    <path d="M12 19.5v2"></path>
+                    <path d="m4.5 4.5 1.5 1.5"></path>
+                    <path d="m18 18 1.5 1.5"></path>
+                    <path d="M2.5 12h2"></path>
+                    <path d="M19.5 12h2"></path>
+                  </svg>
+                  <svg
+                    class="theme-toggle__knob-icon theme-toggle__knob-icon--moon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M21 14.2A8.2 8.2 0 1 1 9.8 3.2 6.8 6.8 0 0 0 21 14.2z"
+                    ></path>
+                    <circle cx="18" cy="7" r="0.65"></circle>
+                    <circle cx="20" cy="11" r="0.45"></circle>
+                  </svg>
+                </span>
+              </span>
+            </button>
+            <details class="md:hidden relative">
             <summary class="list-none cursor-pointer p-2 -mr-2">
               <i data-lucide="menu" class="w-5 h-5"></i>
             </summary>
@@ -453,6 +779,7 @@
               >
             </div>
           </details>
+          </div>
         </nav>
       </header>
       <main>
@@ -899,7 +1226,7 @@
         </section>
         <section
           id="experience"
-          class="section-shell bg-[var(--primary)] text-[var(--bg)]"
+          class="section-shell bg-[var(--experience-bg)] text-[var(--experience-text)]"
         >
           <div class="max-w-7xl mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
@@ -1405,6 +1732,93 @@
           }
         } catch (e) {}
 
+        const COLOR_SCHEME_KEY = 'color-scheme';
+        const themeToggle = document.getElementById('theme-toggle');
+        const revealPulse = document.getElementById('theme-reveal-pulse');
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        function isDark() {
+          return html.classList.contains('dark');
+        }
+
+        function syncThemeToggle() {
+          if (!themeToggle) return;
+          themeToggle.setAttribute('aria-pressed', String(isDark()));
+          themeToggle.setAttribute(
+            'aria-label',
+            isDark() ? 'Switch to light mode' : 'Switch to dark mode',
+          );
+        }
+
+        function triggerRevealPulse(x, y) {
+          if (!revealPulse || reduceMotion) return;
+          revealPulse.style.left = x + 'px';
+          revealPulse.style.top = y + 'px';
+          revealPulse.classList.remove('is-active');
+          void revealPulse.offsetWidth;
+          revealPulse.classList.add('is-active');
+        }
+
+        function applyColorScheme(dark) {
+          html.classList.toggle('dark', dark);
+          try {
+            localStorage.setItem(COLOR_SCHEME_KEY, dark ? 'dark' : 'light');
+          } catch (e) {}
+          syncThemeToggle();
+        }
+
+        function toggleColorScheme(event) {
+          const nextDark = !isDark();
+          const rect = themeToggle.getBoundingClientRect();
+          const x = event.clientX || rect.left + rect.width / 2;
+          const y = event.clientY || rect.top + rect.height / 2;
+
+          triggerRevealPulse(x, y);
+
+          const update = function () {
+            applyColorScheme(nextDark);
+          };
+
+          if (
+            !reduceMotion &&
+            typeof document.startViewTransition === 'function'
+          ) {
+            const transition = document.startViewTransition(update);
+            transition.ready
+              .then(function () {
+                const endRadius = Math.hypot(
+                  Math.max(x, window.innerWidth - x),
+                  Math.max(y, window.innerHeight - y),
+                );
+                document.documentElement.animate(
+                  [
+                    { clipPath: 'circle(0px at ' + x + 'px ' + y + 'px)' },
+                    {
+                      clipPath:
+                        'circle(' + endRadius + 'px at ' + x + 'px ' + y + 'px)',
+                    },
+                  ],
+                  {
+                    duration: 700,
+                    easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+                    pseudoElement: '::view-transition-new(root)',
+                  },
+                );
+              })
+              .catch(function () {});
+          } else {
+            update();
+          }
+        }
+
+        syncThemeToggle();
+
+        if (themeToggle) {
+          themeToggle.addEventListener('click', toggleColorScheme);
+        }
+
         document.addEventListener(
           'keydown',
           function (e) {
@@ -1457,7 +1871,7 @@
         );
 
         const finePointer = window.matchMedia('(pointer: fine)').matches;
-        const reduceMotion = window.matchMedia(
+        const reduceMotionCursor = window.matchMedia(
           '(prefers-reduced-motion: reduce)',
         ).matches;
 
@@ -1474,7 +1888,7 @@
         let ringX = 0;
         let ringY = 0;
         let visible = false;
-        const lerp = reduceMotion ? 1 : 0.15;
+        const lerp = reduceMotionCursor ? 1 : 0.15;
 
         const interactive =
           'a, button, [role="button"], summary, input, textarea, select, label';
