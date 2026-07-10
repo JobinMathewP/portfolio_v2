@@ -179,6 +179,625 @@
         color: var(--primary);
       }
 
+      /* Architecture workflow */
+      .workflow-pin-wrap {
+        position: relative;
+        background: var(--bg);
+        padding-bottom: 0.5rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .workflow-section-header {
+        flex-shrink: 0;
+      }
+
+      .workflow-stage {
+        position: relative;
+        height: clamp(460px, 58vh, 620px);
+        min-height: 0;
+        margin-top: 0.5rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) transparent;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--bg);
+      }
+
+      .workflow-stage::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .workflow-stage::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 9999px;
+      }
+
+      @media (min-width: 1024px) {
+        .workflow-stage {
+          height: clamp(500px, 62vh, 660px);
+          overflow: visible;
+          scroll-snap-type: none;
+        }
+      }
+
+      @media (max-width: 1023px) {
+        .workflow-stage {
+          padding-inline: 1rem;
+          scroll-padding-inline: 1rem;
+        }
+
+        .workflow-diagram {
+          display: block;
+          height: 100%;
+          width: auto;
+          max-width: none;
+          will-change: transform;
+        }
+
+        .workflow-stage--scroll-driven {
+          overflow-x: hidden;
+          scroll-snap-type: none;
+        }
+      }
+
+      .workflow-diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: inherit;
+      }
+
+      .wf-diagram-bg {
+        fill: var(--bg);
+      }
+
+      .wf-diagram-grid {
+        opacity: 0.9;
+      }
+
+      .wf-grid-line {
+        stroke: var(--border);
+      }
+
+      .wf-grid-line--minor {
+        opacity: 0.45;
+      }
+
+      .wf-grid-line--major {
+        opacity: 0.7;
+      }
+
+      .wf-arrow-head {
+        fill: var(--muted);
+      }
+
+      .wf-trace-edge {
+        stroke: color-mix(in srgb, var(--muted) 70%, var(--border));
+        stroke-width: 1.5;
+        transition: stroke 0.35s ease;
+      }
+
+      .wf-trace-mid {
+        stroke: color-mix(in srgb, var(--muted) 70%, var(--border));
+        stroke-width: 1.75;
+        transition:
+          stroke 0.35s ease,
+          stroke-width 0.35s ease;
+      }
+
+      .wf-trace.is-lit .wf-trace-edge,
+      .wf-trace.is-lit .wf-trace-mid {
+        stroke: var(--accent);
+      }
+
+      .wf-trace.is-lit .wf-trace-mid {
+        stroke-width: 2.25;
+      }
+
+      html.neon .wf-trace.is-lit .wf-trace-edge,
+      html.neon .wf-trace.is-lit .wf-trace-mid {
+        stroke: var(--primary);
+      }
+
+      .workflow-svg-step {
+        cursor: pointer;
+        opacity: 0.58;
+        transition: opacity 0.4s ease;
+      }
+
+      .workflow-svg-step.is-passed {
+        opacity: 0.88;
+      }
+
+      .workflow-svg-step.is-active {
+        opacity: 1;
+      }
+
+      .workflow-svg-step:focus-visible {
+        outline: none;
+      }
+
+      .workflow-svg-step:focus-visible .wf-card {
+        stroke: var(--accent);
+        stroke-width: 2.5;
+      }
+
+      .wf-hit {
+        cursor: pointer;
+      }
+
+      .wf-step-title {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 16px;
+        font-weight: 600;
+        fill: var(--text);
+        text-anchor: middle;
+        transition: fill 0.35s ease;
+      }
+
+      .wf-step-arrow {
+        fill: none;
+        stroke: var(--muted);
+        stroke-width: 1.5;
+        transition: stroke 0.35s ease;
+      }
+
+      .wf-card {
+        fill: var(--surface);
+        stroke: var(--border);
+        stroke-width: 2;
+        transition:
+          fill 0.35s ease,
+          stroke 0.35s ease,
+          filter 0.35s ease;
+      }
+
+      .wf-card-inset {
+        fill: none;
+        stroke: color-mix(in srgb, var(--border) 75%, transparent);
+        stroke-width: 1;
+        transition: stroke 0.35s ease;
+      }
+
+      .wf-icon {
+        stroke: var(--text);
+        transition: stroke 0.35s ease;
+      }
+
+      .wf-icon-fill {
+        fill: var(--text);
+        stroke: none;
+        transition: fill 0.35s ease;
+      }
+
+      .wf-card-label {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 11px;
+        fill: var(--muted);
+        text-anchor: middle;
+        transition: fill 0.35s ease;
+      }
+
+      .wf-meta-label {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 600;
+        fill: var(--text);
+      }
+
+      .wf-meta-chevron {
+        fill: var(--muted);
+      }
+
+      .wf-meta-item {
+        font-family: var(--font-body);
+        font-size: 13px;
+        fill: color-mix(in srgb, var(--text) 72%, var(--muted));
+      }
+
+      .workflow-svg-step.is-active .wf-step-title {
+        fill: var(--accent);
+      }
+
+      .workflow-svg-step.is-active .wf-step-arrow {
+        stroke: var(--accent);
+        stroke-width: 2;
+      }
+
+      .workflow-svg-step.is-active .wf-card {
+        fill: color-mix(in srgb, var(--accent) 8%, var(--surface));
+        stroke: var(--accent);
+        stroke-width: 2.5;
+        filter: url(#wf-shadow-highlight);
+      }
+
+      .workflow-svg-step.is-active .wf-card-inset {
+        stroke: color-mix(in srgb, var(--accent) 45%, var(--border));
+      }
+
+      .workflow-svg-step.is-active .wf-icon {
+        stroke: color-mix(in srgb, var(--accent) 80%, var(--text));
+      }
+
+      .workflow-svg-step.is-active .wf-icon-fill {
+        fill: color-mix(in srgb, var(--accent) 80%, var(--text));
+      }
+
+      .workflow-svg-step.is-active .wf-card-label {
+        fill: color-mix(in srgb, var(--accent) 85%, var(--text));
+      }
+
+      .workflow-svg-step.is-active .wf-meta-chevron {
+        fill: var(--accent);
+      }
+
+      html.neon .workflow-svg-step.is-active .wf-step-title,
+      html.neon .workflow-svg-step.is-active .wf-step-arrow,
+      html.neon .workflow-svg-step.is-active .wf-card {
+        stroke: var(--primary);
+        fill: color-mix(in srgb, var(--primary) 8%, var(--surface));
+      }
+
+      html.neon .workflow-svg-step.is-active .wf-step-title {
+        fill: var(--primary);
+      }
+
+      html.neon .workflow-svg-step.is-active .wf-meta-chevron {
+        fill: var(--primary);
+      }
+
+      .workflow-detail {
+        display: none !important;
+      }
+      .workflow-progress {
+        position: relative;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 0.5rem 0;
+        flex-shrink: 0;
+      }
+
+      .workflow-progress__counter {
+        font-family: ui-monospace, monospace;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      .workflow-progress__counter strong {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      html.neon .workflow-progress__counter strong {
+        color: var(--primary);
+      }
+
+      .workflow-progress__dots {
+        display: flex;
+        gap: 0.375rem;
+      }
+
+      .workflow-progress__dot {
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 50%;
+        background: var(--border);
+        transition:
+          transform 0.25s ease,
+          background-color 0.25s ease;
+      }
+
+      .workflow-progress__dot.is-active {
+        background: var(--accent);
+        transform: scale(1.4);
+      }
+
+      .workflow-progress__dot.is-passed {
+        background: color-mix(in srgb, var(--accent) 50%, var(--border));
+      }
+
+      .workflow-scroll-hint {
+        position: absolute;
+        bottom: 0.375rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        font-size: 0.625rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .workflow-detail {
+        display: none;
+        position: relative;
+        width: 100%;
+        z-index: 5;
+        margin-top: 1rem;
+        padding: 1.25rem;
+        background: color-mix(in srgb, var(--surface) 92%, transparent);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .workflow-detail.is-visible {
+        display: block;
+      }
+
+      @media (min-width: 1024px) {
+        .workflow-detail.is-visible {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.25rem 2rem;
+          align-items: start;
+        }
+
+        .workflow-detail.is-visible .workflow-detail__focus-label,
+        .workflow-detail.is-visible .workflow-detail__focus {
+          grid-column: 1;
+        }
+
+        .workflow-detail.is-visible .workflow-detail__stack-label,
+        .workflow-detail.is-visible .skill-pills {
+          grid-column: 2;
+          grid-row: 1 / span 4;
+          align-self: center;
+        }
+
+        .workflow-detail.is-visible .workflow-detail__step,
+        .workflow-detail.is-visible .workflow-detail__title,
+        .workflow-detail.is-visible .workflow-detail__subtitle {
+          grid-column: 1;
+        }
+      }
+
+      .workflow-detail__step {
+        font-family: ui-monospace, monospace;
+        font-size: 0.6875rem;
+        color: var(--accent);
+        margin-bottom: 0.375rem;
+      }
+
+      .workflow-detail__title {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+
+      .workflow-detail__subtitle {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      .workflow-detail__focus-label {
+        font-size: 0.625rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.375rem;
+      }
+
+      .workflow-detail__focus {
+        font-size: 0.8125rem;
+        line-height: 1.55;
+        color: var(--text);
+        margin-bottom: 1rem;
+      }
+
+      .workflow-detail__stack-label {
+        font-size: 0.625rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+
+      .workflow-foundation {
+        position: relative;
+        margin-top: 0.125rem;
+        padding: 0.5rem 0 0.25rem;
+        text-align: center;
+      }
+
+      .workflow-foundation::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        width: min(94%, 56rem);
+        height: 100%;
+        border-radius: var(--radius-md);
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--surface) 35%, transparent),
+          transparent 72%
+        );
+        pointer-events: none;
+      }
+
+      .workflow-foundation__line {
+        position: relative;
+        z-index: 1;
+        height: 1px;
+        margin: 0 auto 0.625rem;
+        max-width: min(100%, 48rem);
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border) 12%,
+          var(--border) 88%,
+          transparent
+        );
+        opacity: 0.55;
+      }
+
+      .workflow-foundation__inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4375rem;
+      }
+
+      .workflow-foundation__label {
+        font-size: 0.5625rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        opacity: 0.72;
+      }
+
+      .workflow-foundation .skill-pills {
+        justify-content: center;
+        gap: 0.375rem;
+      }
+
+      .workflow-foundation .skill-pill {
+        font-size: 0.6875rem;
+        padding: 0.2rem 0.5625rem;
+        border-color: color-mix(in srgb, var(--border) 75%, transparent);
+        background: color-mix(in srgb, var(--surface) 45%, transparent);
+        color: var(--muted);
+      }
+
+      html.neon .workflow-foundation .skill-pill {
+        border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+      }
+
+      .workflow-sheet-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100002;
+        background: rgba(12, 10, 9, 0.45);
+        backdrop-filter: blur(2px);
+      }
+
+      .workflow-sheet-backdrop.is-open {
+        display: block;
+      }
+
+      .workflow-sheet {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100003;
+        max-height: 70vh;
+        padding: 1.25rem 1.25rem 1.75rem;
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(100%);
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        overflow-y: auto;
+      }
+
+      .workflow-sheet.is-open {
+        transform: translateY(0);
+      }
+
+      .workflow-sheet__handle {
+        width: 2.5rem;
+        height: 0.25rem;
+        margin: 0 auto 1rem;
+        background: var(--border);
+        border-radius: 9999px;
+      }
+
+      @media (min-width: 1024px) {
+        .workflow-sheet-backdrop,
+        .workflow-sheet {
+          display: none !important;
+        }
+      }
+
+      @media (max-width: 1023px) {
+        .workflow-stage {
+          height: clamp(240px, 34vh, 300px);
+        }
+
+        .workflow-node {
+          width: 7.5rem;
+        }
+
+        .workflow-node__title {
+          font-size: 0.6875rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .workflow-node,
+        .workflow-sheet {
+          transition: none;
+        }
+      }
+
+      html.neon .workflow-node.is-active .workflow-node__pedestal {
+        box-shadow:
+          0 0 24px color-mix(in srgb, var(--primary) 45%, transparent),
+          0 8px 20px color-mix(in srgb, var(--text) 12%, transparent);
+      }
+
+      .skill-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .skill-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.375rem 0.875rem;
+        font-size: 0.8125rem;
+        line-height: 1.25;
+        color: var(--text);
+        background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+        border: 1px solid var(--border);
+        border-radius: 9999px;
+        transition:
+          border-color 0.2s ease,
+          color 0.2s ease,
+          background-color 0.2s ease;
+      }
+
+      .skill-pill:hover {
+        border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+      }
+
+      .skill-pill--soft {
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      html.neon .skill-pill:hover {
+        color: var(--primary);
+      }
+
       .section-shell {
         padding-block: var(--section-py);
       }
@@ -872,6 +1491,8 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   </head>
   <body>
     <div class="cursor-dot" aria-hidden="true"></div>
@@ -1177,294 +1798,298 @@
         </section>
         <section id="skills" class="section-shell">
           <div class="max-w-7xl mx-auto px-6 lg:px-10">
-            <div class="mb-10 lg:mb-12 max-w-3xl">
-              <div class="eyebrow mb-3">— Capabilities</div>
-              <h2
-                class="font-display text-4xl lg:text-5xl font-medium tracking-tight mb-4"
-              >
-                Skills &amp; <span class="italic font-light">toolkit.</span>
-              </h2>
-              <p class="text-base text-[var(--muted)] leading-relaxed">
-                A focused stack refined over nine years of shipping production
-                systems across startups and scale-ups.
-              </p>
-            </div>
-            <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-md)] overflow-hidden"
-            >
-              <div
-                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
-              >
-                <div class="flex items-start justify-between mb-5">
-                  <div class="icon-badge">
-                    <i data-lucide="code-2" class="w-4 h-4"></i>
-                  </div>
-                  <span class="text-xs text-[var(--muted)] font-mono">01</span>
-                </div>
-                <h3
-                  class="font-display text-xl font-medium mb-4 tracking-tight"
+            <div class="workflow-pin-wrap" id="workflow-pin-wrap">
+              <div class="workflow-section-header mb-6 lg:mb-8 max-w-3xl">
+                <div class="eyebrow mb-3">— Capabilities</div>
+                <h2
+                  class="font-display text-4xl lg:text-5xl font-medium tracking-tight mb-4"
                 >
-                  Core Languages
-                </h3>
-                <ul class="space-y-2">
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>JavaScript</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>TypeScript</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>SQL</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>NoSQL</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Python (basic)</span>
-                  </li>
-                </ul>
+                  Refined production stack
+                  <span class="italic font-light">and architecture.</span>
+                </h2>
+                <p class="text-base text-[var(--muted)] leading-relaxed">
+                  How I design and ship production systems — from client to
+                  persistence.
+                </p>
+              </div>
+              <div class="workflow-progress" aria-live="polite">
+                <span class="workflow-progress__counter"
+                  ><strong id="workflow-step-current">01</strong> /
+                  <span id="workflow-step-total">06</span></span
+                >
+                <div
+                  class="workflow-progress__dots"
+                  id="workflow-progress-dots"
+                  aria-hidden="true"
+                ></div>
+              </div>
+              <div class="workflow-stage" id="workflow-stage">
+<svg
+                  class="workflow-diagram"
+                  id="workflow-diagram"
+                  viewBox="15 48 1170 558"
+                  preserveAspectRatio="xMinYMid meet"
+                  role="img"
+                  aria-label="Production architecture workflow diagram"
+                >
+                  <defs>
+                    <pattern id="wf-grid-small" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path class="wf-grid-line wf-grid-line--minor" d="M 20 0 L 0 0 0 20" fill="none" stroke-width="0.5" />
+                    </pattern>
+                    <pattern id="wf-grid-major" width="100" height="100" patternUnits="userSpaceOnUse">
+                      <rect width="100" height="100" fill="url(#wf-grid-small)" />
+                      <path class="wf-grid-line wf-grid-line--major" d="M 100 0 L 0 0 0 100" fill="none" stroke-width="1" />
+                    </pattern>
+                    <filter id="wf-shadow-base" x="-10%" y="-10%" width="130%" height="130%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.08" />
+                      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.12" />
+                    </filter>
+                    <filter id="wf-shadow-highlight" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#f97316" flood-opacity="0.2" />
+                      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#f97316" flood-opacity="0.35" />
+                    </filter>
+                    <marker id="wf-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path class="wf-arrow-head" d="M 0 0 L 10 5 L 0 10 z" />
+                    </marker>
+                  </defs>
+
+                  <rect class="wf-diagram-bg" width="100%" height="100%" />
+                  <rect class="wf-diagram-grid" width="100%" height="100%" fill="url(#wf-grid-major)" />
+
+                  <g transform="translate(0, 50)">
+                    <g class="wf-traces" fill="none" stroke-linejoin="round">
+                      <g class="wf-trace" data-trace="0">
+                        <path class="wf-trace-edge" d="M 165 290 L 180 290 L 185 285 L 215 285 L 220 290 L 235 290" />
+                        <path class="wf-trace-mid" d="M 165 300 L 235 300" />
+                        <path class="wf-trace-edge" d="M 165 310 L 180 310 L 185 315 L 215 315 L 220 310 L 235 310" />
+                      </g>
+                      <g class="wf-trace" data-trace="1">
+                        <path class="wf-trace-edge" d="M 365 290 L 380 290 L 385 285 L 415 285 L 420 290 L 435 290" />
+                        <path class="wf-trace-mid" d="M 365 300 L 435 300" />
+                        <path class="wf-trace-edge" d="M 365 310 L 380 310 L 385 315 L 415 315 L 420 310 L 435 310" />
+                      </g>
+                      <g class="wf-trace" data-trace="2">
+                        <path class="wf-trace-edge" d="M 565 290 L 580 290 L 585 285 L 615 285 L 620 290 L 635 290" />
+                        <path class="wf-trace-mid" d="M 565 300 L 635 300" />
+                        <path class="wf-trace-edge" d="M 565 310 L 580 310 L 585 315 L 615 315 L 620 310 L 635 310" />
+                      </g>
+                      <g class="wf-trace" data-trace="3">
+                        <path class="wf-trace-edge" d="M 765 290 L 780 290 L 785 285 L 815 285 L 820 290 L 835 290" />
+                        <path class="wf-trace-mid" d="M 765 300 L 835 300" />
+                        <path class="wf-trace-edge" d="M 765 310 L 780 310 L 785 315 L 815 315 L 820 310 L 835 310" />
+                      </g>
+                      <g class="wf-trace" data-trace="4">
+                        <path class="wf-trace-edge" d="M 965 290 L 980 290 L 985 285 L 1015 285 L 1020 290 L 1035 290" />
+                        <path class="wf-trace-mid" d="M 965 300 L 1035 300" />
+                        <path class="wf-trace-edge" d="M 965 310 L 980 310 L 985 315 L 1015 315 L 1020 310 L 1035 310" />
+                      </g>
+                    </g>
+
+                    <g class="workflow-svg-step" data-index="0" role="button" tabindex="0" aria-label="01 Client Application">
+                      <rect class="wf-hit" x="20" y="70" width="160" height="520" fill="transparent" />
+                      <text class="wf-step-title" x="100" y="110">Client</text>
+                      <text class="wf-step-title" x="100" y="132">Application</text>
+                      <path class="wf-step-arrow" d="M 100 150 L 100 205" marker-end="url(#wf-arrow)" />
+                      <rect class="wf-card" x="35" y="230" width="130" height="140" rx="12" filter="url(#wf-shadow-base)" />
+                      <rect class="wf-card-inset" x="42" y="237" width="116" height="126" rx="6" />
+                      <g class="wf-icon" transform="translate(70, 260)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="5" width="50" height="34" rx="3" />
+                        <path d="M 0 45 L 60 45" />
+                        <path d="M 25 45 L 35 45" />
+                      </g>
+                      <text class="wf-card-label" x="100" y="340">Frontend</text>
+                      <g class="wf-meta" transform="translate(35, 410)">
+                        <text class="wf-meta-label" y="0"><tspan class="wf-meta-chevron">↳</tspan> Stack</text>
+                        <text class="wf-meta-item" x="15" y="22">React</text>
+                        <text class="wf-meta-item" x="15" y="42">Next.js</text>
+                        <text class="wf-meta-item" x="15" y="62">Tailwind</text>
+                        <text class="wf-meta-label" y="100"><tspan class="wf-meta-chevron">↳</tspan> Focus</text>
+                        <text class="wf-meta-item" x="15" y="122">Responsive &amp;</text>
+                        <text class="wf-meta-item" x="15" y="142">accessible UI</text>
+                      </g>
+                    </g>
+
+                    <g class="workflow-svg-step" data-index="1" role="button" tabindex="0" aria-label="02 Edge and Delivery">
+                      <rect class="wf-hit" x="220" y="70" width="160" height="520" fill="transparent" />
+                      <text class="wf-step-title" x="300" y="110">Edge &amp;</text>
+                      <text class="wf-step-title" x="300" y="132">Delivery</text>
+                      <path class="wf-step-arrow" d="M 300 150 L 300 205" marker-end="url(#wf-arrow)" />
+                      <rect class="wf-card" x="235" y="230" width="130" height="140" rx="12" filter="url(#wf-shadow-base)" />
+                      <rect class="wf-card-inset" x="242" y="237" width="116" height="126" rx="6" />
+                      <g class="wf-icon" transform="translate(270, 260)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="30" cy="25" r="20" />
+                        <path d="M 10 25 C 10 15 50 15 50 25 C 50 35 10 35 10 25" />
+                        <path d="M 30 5 C 20 5 20 45 30 45" />
+                        <path d="M 30 5 C 40 5 40 45 30 45" />
+                      </g>
+                      <text class="wf-card-label" x="300" y="340">CDN Layer</text>
+                      <g class="wf-meta" transform="translate(235, 410)">
+                        <text class="wf-meta-label" y="0"><tspan class="wf-meta-chevron">↳</tspan> Stack</text>
+                        <text class="wf-meta-item" x="15" y="22">CloudFront</text>
+                        <text class="wf-meta-item" x="15" y="42">S3 / R53</text>
+                        <text class="wf-meta-item" x="15" y="62">AWS ACM</text>
+                        <text class="wf-meta-label" y="100"><tspan class="wf-meta-chevron">↳</tspan> Focus</text>
+                        <text class="wf-meta-item" x="15" y="122">Global delivery,</text>
+                        <text class="wf-meta-item" x="15" y="142">TLS termination</text>
+                      </g>
+                    </g>
+
+                    <g class="workflow-svg-step" data-index="2" role="button" tabindex="0" aria-label="03 API Gateway and Routing">
+                      <rect class="wf-hit" x="420" y="70" width="160" height="520" fill="transparent" />
+                      <text class="wf-step-title" x="500" y="110">API Gateway</text>
+                      <text class="wf-step-title" x="500" y="132">&amp; Routing</text>
+                      <path class="wf-step-arrow" d="M 500 150 L 500 205" marker-end="url(#wf-arrow)" />
+                      <rect class="wf-card" x="435" y="230" width="130" height="140" rx="12" filter="url(#wf-shadow-base)" />
+                      <rect class="wf-card-inset" x="442" y="237" width="116" height="126" rx="6" />
+                      <g class="wf-icon" transform="translate(470, 260)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="20" y="10" width="20" height="30" rx="4" />
+                        <path d="M 0 25 L 20 25" />
+                        <path d="M 40 25 L 60 25" />
+                        <path d="M 0 10 L 10 10 L 10 25" />
+                        <path d="M 0 40 L 10 40 L 10 25" />
+                        <path d="M 50 25 L 50 10 L 60 10" />
+                        <path d="M 50 25 L 50 40 L 60 40" />
+                      </g>
+                      <text class="wf-card-label" x="500" y="340">Serverless</text>
+                      <g class="wf-meta" transform="translate(435, 410)">
+                        <text class="wf-meta-label" y="0"><tspan class="wf-meta-chevron">↳</tspan> Stack</text>
+                        <text class="wf-meta-item" x="15" y="22">AWS Lambda</text>
+                        <text class="wf-meta-item" x="15" y="42">REST APIs</text>
+                        <text class="wf-meta-item" x="15" y="62">Auth0 / JWT</text>
+                        <text class="wf-meta-label" y="100"><tspan class="wf-meta-chevron">↳</tspan> Focus</text>
+                        <text class="wf-meta-item" x="15" y="122">Secure entry,</text>
+                        <text class="wf-meta-item" x="15" y="142">request routing</text>
+                      </g>
+                    </g>
+
+                    <g class="workflow-svg-step" data-index="3" role="button" tabindex="0" aria-label="04 Core Microservices">
+                      <rect class="wf-hit" x="620" y="70" width="160" height="520" fill="transparent" />
+                      <text class="wf-step-title" x="700" y="110">Core</text>
+                      <text class="wf-step-title" x="700" y="132">Microservices</text>
+                      <path class="wf-step-arrow" d="M 700 150 L 700 205" marker-end="url(#wf-arrow)" />
+                      <rect class="wf-card" x="635" y="230" width="130" height="140" rx="12" filter="url(#wf-shadow-base)" />
+                      <rect class="wf-card-inset" x="642" y="237" width="116" height="126" rx="6" />
+                      <g class="wf-icon" transform="translate(670, 260)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="30" cy="25" r="14" />
+                        <path d="M 30 5 L 30 8" />
+                        <path d="M 30 42 L 30 45" />
+                        <path d="M 10 25 L 13 25" />
+                        <path d="M 47 25 L 50 25" />
+                        <path d="M 16 11 L 18 13" />
+                        <path d="M 44 39 L 42 37" />
+                        <path d="M 44 11 L 42 13" />
+                        <path d="M 16 39 L 18 37" />
+                        <circle class="wf-icon-fill" cx="30" cy="25" r="6" />
+                      </g>
+                      <text class="wf-card-label" x="700" y="340">AWS ECS / Fargate</text>
+                      <g class="wf-meta" transform="translate(635, 410)">
+                        <text class="wf-meta-label" y="0"><tspan class="wf-meta-chevron">↳</tspan> Stack</text>
+                        <text class="wf-meta-item" x="15" y="22">Node.js</text>
+                        <text class="wf-meta-item" x="15" y="42">NestJS</text>
+                        <text class="wf-meta-item" x="15" y="62">Docker</text>
+                        <text class="wf-meta-label" y="100"><tspan class="wf-meta-chevron">↳</tspan> Focus</text>
+                        <text class="wf-meta-item" x="15" y="122">Containerized</text>
+                        <text class="wf-meta-item" x="15" y="142">business logic</text>
+                      </g>
+                    </g>
+
+                    <g class="workflow-svg-step" data-index="4" role="button" tabindex="0" aria-label="05 Async and Integrations">
+                      <rect class="wf-hit" x="820" y="70" width="160" height="520" fill="transparent" />
+                      <text class="wf-step-title" x="900" y="110">Async &amp;</text>
+                      <text class="wf-step-title" x="900" y="132">Integrations</text>
+                      <path class="wf-step-arrow" d="M 900 150 L 900 205" marker-end="url(#wf-arrow)" />
+                      <rect class="wf-card" x="835" y="230" width="130" height="140" rx="12" filter="url(#wf-shadow-base)" />
+                      <rect class="wf-card-inset" x="842" y="237" width="116" height="126" rx="6" />
+                      <g class="wf-icon" transform="translate(870, 260)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M 10 25 A 20 20 0 0 1 45 15" />
+                        <path d="M 45 15 L 45 5" />
+                        <path d="M 45 15 L 35 15" />
+                        <path d="M 50 25 A 20 20 0 0 1 15 35" />
+                        <path d="M 15 35 L 15 45" />
+                        <path d="M 15 35 L 25 35" />
+                      </g>
+                      <text class="wf-card-label" x="900" y="340">Event Bus</text>
+                      <g class="wf-meta" transform="translate(835, 410)">
+                        <text class="wf-meta-label" y="0"><tspan class="wf-meta-chevron">↳</tspan> Stack</text>
+                        <text class="wf-meta-item" x="15" y="22">Stripe API</text>
+                        <text class="wf-meta-item" x="15" y="42">AWS SQS / SNS</text>
+                        <text class="wf-meta-item" x="15" y="62">Webhooks</text>
+                        <text class="wf-meta-label" y="100"><tspan class="wf-meta-chevron">↳</tspan> Focus</text>
+                        <text class="wf-meta-item" x="15" y="122">Payment flows,</text>
+                        <text class="wf-meta-item" x="15" y="142">queue workers</text>
+                      </g>
+                    </g>
+
+                    <g class="workflow-svg-step" data-index="5" role="button" tabindex="0" aria-label="06 Data Persistence">
+                      <rect class="wf-hit" x="1020" y="70" width="160" height="520" fill="transparent" />
+                      <text class="wf-step-title" x="1100" y="110">Data</text>
+                      <text class="wf-step-title" x="1100" y="132">Persistence</text>
+                      <path class="wf-step-arrow" d="M 1100 150 L 1100 205" marker-end="url(#wf-arrow)" />
+                      <rect class="wf-card" x="1035" y="230" width="130" height="140" rx="12" filter="url(#wf-shadow-base)" />
+                      <rect class="wf-card-inset" x="1042" y="237" width="116" height="126" rx="6" />
+                      <g class="wf-icon" transform="translate(1070, 260)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="30" cy="12" rx="20" ry="8" />
+                        <path d="M 10 12 L 10 38 A 20 8 0 0 0 50 38 L 50 12" />
+                        <path d="M 10 25 A 20 8 0 0 0 50 25" />
+                      </g>
+                      <text class="wf-card-label" x="1100" y="340">SQL &amp; NoSQL</text>
+                      <g class="wf-meta" transform="translate(1035, 410)">
+                        <text class="wf-meta-label" y="0"><tspan class="wf-meta-chevron">↳</tspan> Stack</text>
+                        <text class="wf-meta-item" x="15" y="22">PostgreSQL</text>
+                        <text class="wf-meta-item" x="15" y="42">MongoDB</text>
+                        <text class="wf-meta-item" x="15" y="62">Redis</text>
+                        <text class="wf-meta-label" y="100"><tspan class="wf-meta-chevron">↳</tspan> Focus</text>
+                        <text class="wf-meta-item" x="15" y="122">Relational &amp;</text>
+                        <text class="wf-meta-item" x="15" y="142">document modeling</text>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+                <div class="workflow-scroll-hint" id="workflow-scroll-hint">
+                  <i data-lucide="mouse" class="w-3.5 h-3.5" id="workflow-scroll-hint-icon"></i>
+                  <span class="workflow-scroll-hint__text" id="workflow-scroll-hint-text">Scroll to walk the workflow</span>
+                </div>
               </div>
               <div
-                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
+                class="workflow-foundation"
+                aria-label="Infrastructure and CI/CD foundation"
               >
-                <div class="flex items-start justify-between mb-5">
-                  <div class="icon-badge">
-                    <i data-lucide="server" class="w-4 h-4"></i>
+                <div class="workflow-foundation__line" aria-hidden="true"></div>
+                <div class="workflow-foundation__inner">
+                  <div class="workflow-foundation__label">
+                    Infrastructure &amp; CI/CD Foundation
                   </div>
-                  <span class="text-xs text-[var(--muted)] font-mono">02</span>
-                </div>
-                <h3
-                  class="font-display text-xl font-medium mb-4 tracking-tight"
-                >
-                  Backend
-                </h3>
-                <ul class="space-y-2">
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Node.js</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>NestJS</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Express</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Sequelize</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Mongoose</span>
-                  </li>
-                </ul>
-              </div>
-              <div
-                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
-              >
-                <div class="flex items-start justify-between mb-5">
-                  <div class="icon-badge">
-                    <i data-lucide="layout" class="w-4 h-4"></i>
+                  <div class="skill-pills">
+                    <span class="skill-pill">Terraform</span>
+                    <span class="skill-pill">GitHub Actions</span>
+                    <span class="skill-pill">Docker</span>
                   </div>
-                  <span class="text-xs text-[var(--muted)] font-mono">03</span>
                 </div>
-                <h3
-                  class="font-display text-xl font-medium mb-4 tracking-tight"
-                >
-                  Frontend
-                </h3>
-                <ul class="space-y-2">
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>React</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Next.js</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>HTML</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>CSS</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Tailwind</span>
-                  </li>
-                </ul>
               </div>
-              <div
-                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
-              >
-                <div class="flex items-start justify-between mb-5">
-                  <div class="icon-badge">
-                    <i data-lucide="cloud" class="w-4 h-4"></i>
-                  </div>
-                  <span class="text-xs text-[var(--muted)] font-mono">04</span>
-                </div>
-                <h3
-                  class="font-display text-xl font-medium mb-4 tracking-tight"
-                >
-                  Cloud &amp; DevOps
-                </h3>
-                <ul class="space-y-2">
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>AWS (ECS, S3, CloudFront, ACM, Lambda)</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Docker</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>GitHub Actions</span>
-                  </li>
-                </ul>
-              </div>
-              <div
-                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
-              >
-                <div class="flex items-start justify-between mb-5">
-                  <div class="icon-badge">
-                    <i data-lucide="wrench" class="w-4 h-4"></i>
-                  </div>
-                  <span class="text-xs text-[var(--muted)] font-mono">05</span>
-                </div>
-                <h3
-                  class="font-display text-xl font-medium mb-4 tracking-tight"
-                >
-                  Tools
-                </h3>
-                <ul class="space-y-2">
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>GitHub</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Postman</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>MongoDB</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Stripe</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Firebase</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Terraform</span>
-                  </li>
-                </ul>
-              </div>
-              <div
-                class="bg-[var(--surface)] p-7 lg:p-8 group hover:bg-[var(--bg)] transition-colors"
-              >
-                <div class="flex items-start justify-between mb-5">
-                  <div class="icon-badge">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i>
-                  </div>
-                  <span class="text-xs text-[var(--muted)] font-mono">06</span>
-                </div>
-                <h3
-                  class="font-display text-xl font-medium mb-4 tracking-tight"
-                >
-                  Soft Skills
-                </h3>
-                <ul class="space-y-2">
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Problem-solving</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Clean Architecture</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>Mentoring</span>
-                  </li>
-                  <li
-                    class="text-sm text-[var(--muted)] flex items-start gap-2"
-                  >
-                    <span class="accent-dot mt-2 flex-shrink-0"></span
-                    ><span>API Design</span>
-                  </li>
-                </ul>
-              </div>
+              <aside
+                class="workflow-detail"
+                id="workflow-detail"
+                aria-live="polite"
+              ></aside>
             </div>
           </div>
         </section>
+        <div
+          class="workflow-sheet-backdrop"
+          id="workflow-sheet-backdrop"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="workflow-sheet"
+          id="workflow-sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="workflow-sheet-title"
+          aria-hidden="true"
+        >
+          <div class="workflow-sheet__handle" aria-hidden="true"></div>
+          <div id="workflow-sheet-content"></div>
+        </div>
         <section
           id="experience"
           class="section-shell bg-[var(--experience-bg)] text-[var(--experience-text)]"
@@ -1937,6 +2562,418 @@
     <script>
       lucide.createIcons();
 
+      window.WORKFLOW = [
+        {
+          id: 'client',
+          step: '01',
+          title: 'Client Application',
+          subtitle: 'Frontend',
+          focus: 'Responsive and accessible UI across modern browsers and devices.',
+          stack: ['React', 'Next.js', 'Tailwind'],
+        },
+        {
+          id: 'edge',
+          step: '02',
+          title: 'Edge & Delivery',
+          subtitle: 'CDN Layer',
+          focus: 'Global delivery and TLS termination at the edge.',
+          stack: ['CloudFront', 'S3 / R53', 'AWS ACM'],
+        },
+        {
+          id: 'gateway',
+          step: '03',
+          title: 'API Gateway & Routing',
+          subtitle: 'Serverless',
+          focus: 'Secure entry and request routing into backend services.',
+          stack: ['AWS Lambda', 'REST APIs', 'Auth0 / JWT'],
+        },
+        {
+          id: 'microservices',
+          step: '04',
+          title: 'Core Microservices',
+          subtitle: 'AWS ECS / Fargate',
+          focus: 'Containerized business logic built for production scale.',
+          stack: ['Node.js', 'NestJS', 'Docker'],
+        },
+        {
+          id: 'async',
+          step: '05',
+          title: 'Async & Integrations',
+          subtitle: 'Event Bus',
+          focus: 'Payment flows, queue workers, and third-party connectivity.',
+          stack: ['Stripe API', 'AWS SQS / SNS', 'Webhooks'],
+        },
+        {
+          id: 'data',
+          step: '06',
+          title: 'Data Persistence',
+          subtitle: 'SQL & NoSQL',
+          focus: 'Relational and document modeling with optimized queries.',
+          stack: ['PostgreSQL', 'MongoDB', 'Redis'],
+        },
+      ];
+
+      (function initWorkflow() {
+        const WORKFLOW = window.WORKFLOW;
+        const stage = document.getElementById('workflow-stage');
+        const pinWrap = document.getElementById('workflow-pin-wrap');
+        const diagram = document.getElementById('workflow-diagram');
+        const detailEl = document.getElementById('workflow-detail');
+        const sheet = document.getElementById('workflow-sheet');
+        const sheetBackdrop = document.getElementById('workflow-sheet-backdrop');
+        const sheetContent = document.getElementById('workflow-sheet-content');
+        const stepCurrent = document.getElementById('workflow-step-current');
+        const stepTotal = document.getElementById('workflow-step-total');
+        const progressDots = document.getElementById('workflow-progress-dots');
+        const scrollHint = document.getElementById('workflow-scroll-hint');
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        if (!stage || !diagram) return;
+
+        const stepGroups = diagram.querySelectorAll('.workflow-svg-step');
+        const traceGroups = diagram.querySelectorAll('.wf-trace');
+        const traceMids = diagram.querySelectorAll('.wf-trace-mid');
+
+        let activeIndex = 0;
+        let scrollTriggerInstance = null;
+        let scrollInited = false;
+
+        function renderDetailHtml(step) {
+          const pills = step.stack
+            .map(function (skill) {
+              return '<span class="skill-pill">' + skill + '</span>';
+            })
+            .join('');
+          return (
+            '<div class="workflow-detail__step">' +
+            step.step +
+            '</div>' +
+            '<h3 class="workflow-detail__title" id="workflow-sheet-title">' +
+            step.title +
+            '</h3>' +
+            '<p class="workflow-detail__subtitle">' +
+            step.subtitle +
+            '</p>' +
+            '<div class="workflow-detail__focus-label">Focus</div>' +
+            '<p class="workflow-detail__focus">' +
+            step.focus +
+            '</p>' +
+            '<div class="workflow-detail__stack-label">Core stack</div>' +
+            '<div class="skill-pills">' +
+            pills +
+            '</div>'
+          );
+        }
+
+        function buildProgressDots() {
+          if (!progressDots) return;
+          progressDots.innerHTML = '';
+          WORKFLOW.forEach(function () {
+            const dot = document.createElement('span');
+            dot.className = 'workflow-progress__dot';
+            progressDots.appendChild(dot);
+          });
+        }
+
+        function updateTraces(progress, index) {
+          const scaled = progress * traceGroups.length;
+          traceMids.forEach(function (path, i) {
+            const len = path.getTotalLength();
+            const fill = Math.max(0, Math.min(1, scaled - i));
+            path.style.strokeDasharray = String(len);
+            path.style.strokeDashoffset = String(len * (1 - fill));
+          });
+          traceGroups.forEach(function (trace, i) {
+            trace.classList.toggle('is-lit', i < index);
+          });
+        }
+
+        function setActiveIndex(index) {
+          index = Math.max(0, Math.min(WORKFLOW.length - 1, index));
+          activeIndex = index;
+
+          stepGroups.forEach(function (group, i) {
+            group.classList.remove('is-active', 'is-passed', 'is-upcoming');
+            if (i < index) group.classList.add('is-passed');
+            else if (i === index) group.classList.add('is-active');
+            else group.classList.add('is-upcoming');
+          });
+
+          if (progressDots) {
+            const dots = progressDots.querySelectorAll('.workflow-progress__dot');
+            dots.forEach(function (dot, i) {
+              dot.classList.remove('is-active', 'is-passed');
+              if (i < index) dot.classList.add('is-passed');
+              if (i === index) dot.classList.add('is-active');
+            });
+          }
+
+          if (stepCurrent) {
+            stepCurrent.textContent = WORKFLOW[index].step;
+          }
+        }
+
+        function showDetail(index) {
+          const step = WORKFLOW[index];
+          if (detailEl && window.innerWidth >= 1024) {
+            detailEl.innerHTML = renderDetailHtml(step);
+            detailEl.classList.add('is-visible');
+          }
+        }
+
+        function openSheet(index) {
+          if (!sheet || !sheetContent || !sheetBackdrop) return;
+          const step = WORKFLOW[index];
+          sheetContent.innerHTML = renderDetailHtml(step);
+          sheet.classList.add('is-open');
+          sheet.setAttribute('aria-hidden', 'false');
+          sheetBackdrop.classList.add('is-open');
+          sheetBackdrop.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheet() {
+          if (!sheet || !sheetBackdrop) return;
+          sheet.classList.remove('is-open');
+          sheet.setAttribute('aria-hidden', 'true');
+          sheetBackdrop.classList.remove('is-open');
+          sheetBackdrop.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+
+        const DIAGRAM_VIEWBOX_W = 1170;
+        const DIAGRAM_VIEWBOX_H = 558;
+
+        function getMobileDiagramWidth() {
+          const h = stage.clientHeight;
+          if (!h) return 0;
+          return Math.ceil(h * (DIAGRAM_VIEWBOX_W / DIAGRAM_VIEWBOX_H));
+        }
+
+        function getMobilePanRange() {
+          const style = getComputedStyle(stage);
+          const padStart = parseFloat(style.paddingInlineStart) || parseFloat(style.paddingLeft) || 0;
+          const padEnd = parseFloat(style.paddingInlineEnd) || parseFloat(style.paddingRight) || padStart;
+          const diagramW = diagram.offsetWidth || getMobileDiagramWidth();
+          const travel = diagramW - stage.clientWidth + padStart + padEnd;
+          return Math.max(0, travel);
+        }
+
+        function layoutMobileDiagram() {
+          if (window.innerWidth >= 1024) {
+            diagram.style.removeProperty('width');
+            diagram.style.removeProperty('transform');
+            return;
+          }
+          const h = stage.clientHeight;
+          if (!h) return;
+          const w = getMobileDiagramWidth();
+          diagram.style.width = w + 'px';
+        }
+
+        function syncMobilePan(progress) {
+          if (window.innerWidth >= 1024) {
+            diagram.style.removeProperty('transform');
+            stage.scrollLeft = 0;
+            return;
+          }
+          const travel = getMobilePanRange();
+          diagram.style.transform = 'translate3d(' + (-progress * travel) + 'px,0,0)';
+          stage.scrollLeft = 0;
+        }
+
+        function primeTracePaths() {
+          traceMids.forEach(function (path) {
+            const len = path.getTotalLength();
+            path.style.strokeDasharray = String(len);
+            path.style.strokeDashoffset = String(len);
+          });
+        }
+
+        function killScrollAnimation() {
+          if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.getAll().forEach(function (st) {
+              st.kill();
+            });
+          }
+          stage.classList.remove('workflow-stage--scroll-driven');
+          scrollTriggerInstance = null;
+          scrollInited = false;
+        }
+
+        function initScrollAnimation() {
+          if (scrollInited) return;
+          if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+            return;
+          }
+          scrollInited = true;
+          gsap.registerPlugin(ScrollTrigger);
+          layoutMobileDiagram();
+          primeTracePaths();
+
+          if (reduceMotion) {
+            traceMids.forEach(function (path) {
+              path.style.strokeDashoffset = '0';
+            });
+            traceGroups.forEach(function (trace) {
+              trace.classList.add('is-lit');
+            });
+            stepGroups.forEach(function (group) {
+              group.classList.add('is-passed');
+            });
+            setActiveIndex(WORKFLOW.length - 1);
+            updateTraces(1, WORKFLOW.length - 1);
+            if (scrollHint) scrollHint.style.display = 'none';
+            return;
+          }
+
+          const hintText = document.getElementById('workflow-scroll-hint-text');
+          const hintIcon = document.getElementById('workflow-scroll-hint-icon');
+          const isDesktop = window.innerWidth >= 1024;
+          if (hintText) {
+            hintText.textContent = isDesktop
+              ? 'Scroll to walk the workflow'
+              : 'Keep scrolling to explore';
+          }
+          if (hintIcon) {
+            hintIcon.setAttribute(
+              'data-lucide',
+              isDesktop ? 'mouse' : 'move-horizontal',
+            );
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+          }
+          if (!isDesktop) {
+            stage.classList.add('workflow-stage--scroll-driven');
+          }
+
+          const header = document.querySelector('header');
+          const navOffset = header ? header.offsetHeight : 64;
+          const pinTarget = pinWrap || stage;
+
+          function onWorkflowScrollProgress(progress) {
+            const idx = Math.min(
+              WORKFLOW.length - 1,
+              Math.floor(progress * WORKFLOW.length),
+            );
+            setActiveIndex(idx);
+            updateTraces(progress, idx);
+            if (window.innerWidth < 1024) {
+              syncMobilePan(progress);
+            }
+            if (scrollHint && progress > 0.05) {
+              scrollHint.style.opacity = '0';
+            }
+          }
+
+          scrollTriggerInstance = ScrollTrigger.create({
+            trigger: pinTarget,
+            start: 'top top+=' + navOffset,
+            end: '+=150%',
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            onRefresh: function (self) {
+              layoutMobileDiagram();
+              if (window.innerWidth < 1024) {
+                syncMobilePan(self.progress);
+              }
+            },
+            onUpdate: function (self) {
+              onWorkflowScrollProgress(self.progress);
+            },
+          });
+        }
+
+        function activateStep(index) {
+          setActiveIndex(index);
+          const progress = (index + 0.99) / WORKFLOW.length;
+          updateTraces(progress, index);
+          if (window.innerWidth < 1024) {
+            syncMobilePan(progress);
+            openSheet(index);
+          }
+        }
+
+        buildProgressDots();
+        if (stepTotal) stepTotal.textContent = String(WORKFLOW.length).padStart(2, '0');
+        layoutMobileDiagram();
+        setActiveIndex(0);
+        if (window.innerWidth < 1024) {
+          stage.scrollLeft = 0;
+          syncMobilePan(0);
+        }
+        requestAnimationFrame(function () {
+          layoutMobileDiagram();
+          initScrollAnimation();
+          if (window.innerWidth < 1024) {
+            requestAnimationFrame(function () {
+              layoutMobileDiagram();
+              syncMobilePan(0);
+            });
+          }
+        });
+
+        diagram.addEventListener('click', function (e) {
+          const step = e.target.closest('.workflow-svg-step');
+          if (!step) return;
+          activateStep(parseInt(step.dataset.index, 10));
+        });
+
+        diagram.addEventListener('keydown', function (e) {
+          const step = e.target.closest('.workflow-svg-step');
+          if (!step || (e.key !== 'Enter' && e.key !== ' ')) return;
+          e.preventDefault();
+          activateStep(parseInt(step.dataset.index, 10));
+        });
+
+        if (sheetBackdrop) {
+          sheetBackdrop.addEventListener('click', closeSheet);
+        }
+
+        document.addEventListener('keydown', function (e) {
+          if (!sheet || !sheet.classList.contains('is-open')) {
+            const konamiProgress =
+              window.__portfolioKonami && window.__portfolioKonami.progress;
+            if (konamiProgress > 0) return;
+
+            const skillsInView =
+              stage.getBoundingClientRect().top < window.innerHeight &&
+              stage.getBoundingClientRect().bottom > 0;
+            if (skillsInView && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+              e.preventDefault();
+              const next =
+                e.key === 'ArrowRight'
+                  ? Math.min(WORKFLOW.length - 1, activeIndex + 1)
+                  : Math.max(0, activeIndex - 1);
+              activateStep(next);
+            }
+            return;
+          }
+          if (e.key === 'Escape') closeSheet();
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            killScrollAnimation();
+            primeTracePaths();
+            layoutMobileDiagram();
+            if (window.innerWidth < 1024) {
+              stage.scrollLeft = 0;
+              syncMobilePan(0);
+            }
+            initScrollAnimation();
+            if (typeof ScrollTrigger !== 'undefined') {
+              ScrollTrigger.refresh();
+            }
+          }, 150);
+        });
+      })();
       (function () {
         const KONAMI = [
           'ArrowUp',
@@ -1966,6 +3003,12 @@
         const html = document.documentElement;
         const toast = document.getElementById('theme-toast');
         let konamiIndex = 0;
+
+        window.__portfolioKonami = {
+          get progress() {
+            return konamiIndex;
+          },
+        };
         let toastTimer = null;
 
         function logKonami(message, detail) {
@@ -2130,6 +3173,7 @@
 
             if (e.code === expected) {
               konamiIndex += 1;
+              e.stopPropagation();
               logKonami(
                 'match ✓',
                 KONAMI_LABELS[konamiIndex - 1] +
@@ -2264,36 +3308,7 @@
           ],
           availability:
             'Open to select freelance engagements, consulting, and full-time opportunities.',
-          skills: {
-            'Core Languages': [
-              'JavaScript',
-              'TypeScript',
-              'SQL',
-              'NoSQL',
-              'Python (basic)',
-            ],
-            Backend: [
-              'Node.js',
-              'NestJS',
-              'Express',
-              'Sequelize',
-              'Mongoose',
-            ],
-            Frontend: ['React', 'Next.js', 'HTML', 'CSS', 'Tailwind'],
-            'Cloud & DevOps': [
-              'AWS (ECS, S3, CloudFront, ACM, Lambda)',
-              'Docker',
-              'GitHub Actions',
-            ],
-            Tools: [
-              'GitHub',
-              'Postman',
-              'MongoDB',
-              'Stripe',
-              'Firebase',
-              'Terraform',
-            ],
-          },
+          skills: {},
           experience: [
             'Built and scaled production applications end-to-end',
             'Designed REST APIs and backend systems',
@@ -2343,7 +3358,8 @@
             },
             '~/projects/stack.txt': {
               type: 'file',
-              content: 'Node.js | React | AWS | TypeScript\n',
+              content:
+                'Scroll the Capabilities workflow or type `workflow` in the terminal.\n',
             },
             '~/resume.pdf': { type: 'file', binary: true },
             '~/contact': { type: 'dir', children: ['email.txt'] },
@@ -2355,6 +3371,17 @@
         };
 
         PROFILE.vfs['~/about.txt'].content = PROFILE.bio.join('\n\n') + '\n';
+
+        if (window.WORKFLOW) {
+          window.WORKFLOW.forEach(function (step) {
+            PROFILE.skills[step.title] = step.stack;
+          });
+          PROFILE.skills['CI/CD Foundation'] = [
+            'Terraform',
+            'GitHub Actions',
+            'Docker',
+          ];
+        }
 
         const FORTUNES = [
           'There are only two hard things in CS: cache invalidation and naming things.',
@@ -2395,6 +3422,7 @@
           'whoami',
           'about',
           'skills',
+          'workflow',
           'experience',
           'services',
           'contact',
@@ -2574,7 +3602,7 @@
               '  contact, resume, exit',
               '',
               'Tier 2 — dev depth',
-              '  neofetch, ls, tree, cat, curl resume, hire, history, github',
+              '  neofetch, workflow, ls, tree, cat, curl resume, hire, history, github',
               '',
               'Tier 3 — undocumented',
               '  sudo, rm -rf, matrix, neon, coffee, fortune, ping, npm install',
@@ -2601,6 +3629,21 @@
         function cmdSkills() {
           Object.keys(PROFILE.skills).forEach(function (group) {
             appendLine(group + ': ' + PROFILE.skills[group].join(', '));
+          });
+        }
+
+        function cmdWorkflow() {
+          const wf = window.WORKFLOW || [];
+          if (!wf.length) {
+            appendLine('workflow data unavailable', 'line--error');
+            return;
+          }
+          appendLine('Production stack journey:', 'line--cmd');
+          wf.forEach(function (step) {
+            appendLine(
+              '  ' + step.step + '  ' + step.title + ' — ' + step.subtitle,
+            );
+            appendLine('    ' + step.stack.join(' · '), 'line--muted');
           });
         }
 
@@ -2961,6 +4004,7 @@
           else if (name === 'whoami') cmdWhoami();
           else if (name === 'about') cmdAbout();
           else if (name === 'skills') cmdSkills();
+          else if (name === 'workflow') cmdWorkflow();
           else if (name === 'experience') cmdExperience();
           else if (name === 'services') cmdServices();
           else if (name === 'contact') cmdContact();
